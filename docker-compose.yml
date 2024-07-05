@@ -1,0 +1,14 @@
+
+services:
+  bootcamp-db:
+    image: postgres:16
+    container_name: bootcamp-db
+    environment:
+      POSTGRES_DB: bootcampDB
+      POSTGRES_PASSWORD: Bootcamp123
+      PGDATA: /data/pgdata
+    volumes:
+      - ./.docker-data/postgres/:/data/
+    ports:
+      - "5432:5432"
+    restart: always
