@@ -13,6 +13,15 @@ En MacOs se puede hacer `brew install git`.
 
 Se puede descargar desde [la web de docker](https://www.docker.com/products/docker-desktop/).
 
+### Compilar y Testear con Docker
+
+Estos comandos deberían funcionar siempre y a todos los desarrolladores:
+
+`docker run -itv ${PWD}:/usr/src/app -w /usr/src/app maven:3.8.6-openjdk-11 ./back-end/build.sh`
+
+`docker run -itv ${PWD}:/usr/src/app -w /usr/src/app maven:3.8.6-openjdk-11 ./back-end/run-tests.sh`
+
+
 ## Cliente Postgres
 
 Se puede usar el que tengan, sugerimos [DBeaver](https://dbeaver.io/download/) o [DbVisualizer](https://www.dbvis.com/download/).
@@ -20,6 +29,11 @@ Se puede usar el que tengan, sugerimos [DBeaver](https://dbeaver.io/download/) o
 ## Postman
 
 Descargar desde [la web de postman](https://www.postman.com/downloads/).
+
+### Probar endpoint publico con curl
+
+curl 'https://echo.free.beeceptor.com'
+
 
 ## Java / Maven
 
@@ -36,15 +50,18 @@ Verificar versión:
 1. Java `java -version` >> 11
 2. Java compiler `javac -version` >> javac 11
 3. Maven `mvn -version` >> Apache Maven 3.8.6
+4. Generar jar `mvn clean package`
+5. Ejecutar jar `java -jar target/mensajes-1.0-SNAPSHOT.jar`
 
 ## IntelliJ IDEA Community Edition
 
 Descargar desde [la web de jetbrains](https://www.jetbrains.com/idea/download/)
 
-# Compilar y Testear
+### Compilar y Testear localmente
 
 Estos comandos deberían funcionar siempre y a todos los desarrolladores:
 
-`docker run -itv ${PWD}:/usr/src/app -w /usr/src/app maven:3.8.6-openjdk-11 ./back-end/build.sh`
+`./back-end/build.sh`
 
-`docker run -itv ${PWD}:/usr/src/app -w /usr/src/app maven:3.8.6-openjdk-11 ./back-end/run-tests.sh`
+`./back-end/run-tests.sh`
+
