@@ -26,6 +26,8 @@ Estos comandos deberían funcionar siempre y a todos los desarrolladores:
 
 Se puede usar el que tengan, sugerimos [DBeaver](https://dbeaver.io/download/) o [DbVisualizer](https://www.dbvis.com/download/).
 
+Otra alternativa es [Datagrip](https://www.jetbrains.com/datagrip/download/).
+
 ## Postman
 
 Descargar desde [la web de postman](https://www.postman.com/downloads/).
