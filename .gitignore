@@ -5,3 +5,5 @@ back-end/.maven/
 back-end/mensajes/target/
 # Intellij
 .idea/
+# Docker
+.docker-data/
