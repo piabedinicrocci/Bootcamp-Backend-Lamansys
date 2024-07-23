@@ -16,8 +16,9 @@ import com.google.gson.reflect.TypeToken;
 
 import ar.lamansys.messages.domain.MessageStoredBo;
 import ar.lamansys.messages.infrastructure.output.MessageStorage;
+import org.springframework.stereotype.Repository;
 
-
+@Repository
 public class MessageStorageListImpl implements MessageStorage {
 
     private List<MessageStoredBo> messages = new ArrayList<>();

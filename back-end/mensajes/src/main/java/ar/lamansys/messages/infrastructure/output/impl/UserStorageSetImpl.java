@@ -3,6 +3,7 @@ package ar.lamansys.messages.infrastructure.output.impl;
 import ar.lamansys.messages.infrastructure.output.UserStorage;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import org.springframework.stereotype.Repository;
 
 
 import java.io.BufferedReader;
@@ -14,7 +15,7 @@ import java.nio.file.Paths;
 import java.util.HashSet;
 import java.util.Set;
 
-
+@Repository
 public class UserStorageSetImpl implements UserStorage {
 
     private Set<String> users = new HashSet<>();

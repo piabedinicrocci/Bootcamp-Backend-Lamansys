@@ -15,9 +15,13 @@ import ar.lamansys.messages.application.exception.UserSessionNotExists;
 import ar.lamansys.messages.domain.ChatMessageBo;
 import ar.lamansys.messages.domain.NewMessageBo;
 import lombok.AllArgsConstructor;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @AllArgsConstructor
+@SpringBootApplication
 public class MessageApp  {
+
     private final AddUser addUser;
     private final ClearData clearData;
     private final FetchUserChat fetchUserChat;
@@ -26,15 +30,8 @@ public class MessageApp  {
     private final SendUserMessage sendUserMessage;
     private final SetUserSession setUserSession;
 
-    public static void main(String[] args) throws UserExistsException, UserNotExistsException, UserSessionNotExists {
-        MessageApp messageApp = MessageAppConfiguration.getBean();
-        messageApp.addUser("user1");
-        messageApp.addUser("user2");
-        messageApp.setUserSession("user1");
-        messageApp.sendUserMessage(new NewMessageBo("user2", "Hola!"));
-        messageApp.fetchUserChat("user2")
-                .forEach(System.out::println);
-
+    public static void main(String[] args) {
+        SpringApplication.run(MessageApp.class, args);
     }
 
     public void sendUserMessage(NewMessageBo newMessage) throws UserNotExistsException, UserSessionNotExists {

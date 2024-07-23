@@ -6,8 +6,10 @@ import ar.lamansys.messages.domain.MessageMapper;
 import ar.lamansys.messages.domain.NewMessageBo;
 import ar.lamansys.messages.infrastructure.output.MessageStorage;
 import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
 
 @AllArgsConstructor
+@Service
 public class SendUserMessage {
     private final GetUserSession getUserSession;
     private final MessageStorage messageStorage;

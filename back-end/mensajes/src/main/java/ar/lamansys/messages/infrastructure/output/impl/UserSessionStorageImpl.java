@@ -1,6 +1,7 @@
 package ar.lamansys.messages.infrastructure.output.impl;
 
 import ar.lamansys.messages.infrastructure.output.UserSessionStorage;
+import org.springframework.stereotype.Repository;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -8,6 +9,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+@Repository
 public class UserSessionStorageImpl implements UserSessionStorage {
     private String user = "";
     private String filePath = "session.txt";

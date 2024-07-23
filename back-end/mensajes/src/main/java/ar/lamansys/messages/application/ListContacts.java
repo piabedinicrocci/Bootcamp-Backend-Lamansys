@@ -9,8 +9,10 @@ import ar.lamansys.messages.domain.MessageStoredBo;
 import ar.lamansys.messages.infrastructure.output.LogUtil;
 import ar.lamansys.messages.infrastructure.output.MessageStorage;
 import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
 
 @AllArgsConstructor
+@Service
 public class ListContacts {
     private final GetUserSession getUserSession;
     private final MessageStorage messageStorage;
