@@ -7,3 +7,5 @@ back-end/mensajes/target/
 .idea/
 # Docker
 .docker-data/
+
+back-end/mensajes/*.txt

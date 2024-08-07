@@ -18,4 +18,6 @@ public interface MessageStorage {
     Stream<MessageStoredBo> findByContact(
             String userId
     );
+
+    void deleteAll();
 }

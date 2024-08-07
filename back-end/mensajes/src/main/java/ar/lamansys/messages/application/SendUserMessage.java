@@ -1,7 +1,7 @@
 package ar.lamansys.messages.application;
 
-import java.util.function.Supplier;
-
+import ar.lamansys.messages.application.exception.UserNotExistsException;
+import ar.lamansys.messages.application.exception.UserSessionNotExists;
 import ar.lamansys.messages.domain.MessageMapper;
 import ar.lamansys.messages.domain.NewMessageBo;
 import ar.lamansys.messages.infrastructure.output.MessageStorage;
@@ -9,12 +9,14 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public class SendUserMessage {
-    private final Supplier<String> userSessionStorage;
+    private final GetUserSession getUserSession;
     private final MessageStorage messageStorage;
+    private final AssertUserExists assertUserExists;
 
-    public void run(NewMessageBo newMessage) {
+    public void run(NewMessageBo newMessage) throws UserNotExistsException, UserSessionNotExists {
+        assertUserExists.run(newMessage.getTargetId());
         var message = MessageMapper.buildMessage(
-                userSessionStorage.get(),
+                getUserSession.run(),
                 newMessage
         );
         messageStorage.save(message);

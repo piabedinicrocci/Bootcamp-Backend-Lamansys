@@ -2,9 +2,9 @@ package ar.lamansys.messages.application;
 
 import java.util.List;
 import java.util.function.Function;
-import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
+import ar.lamansys.messages.application.exception.UserSessionNotExists;
 import ar.lamansys.messages.domain.MessageStoredBo;
 import ar.lamansys.messages.infrastructure.output.LogUtil;
 import ar.lamansys.messages.infrastructure.output.MessageStorage;
@@ -12,15 +12,12 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public class ListContacts {
-    private final Supplier<String> userSessionStorage;
+    private final GetUserSession getUserSession;
     private final MessageStorage messageStorage;
 
-    public List<String> run() {
-        String sessionUserId = userSessionStorage.get();
-
-        List<String> contacts = messageStorage.findByContact(
-                        sessionUserId
-                )
+    public List<String> run() throws UserSessionNotExists {
+        String sessionUserId = getUserSession.run();
+        List<String> contacts = messageStorage.findByContact(sessionUserId)
                 .map(extractContact(sessionUserId))
                 .distinct()
                 .collect(Collectors.toList());
