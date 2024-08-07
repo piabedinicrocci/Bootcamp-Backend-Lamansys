@@ -1,5 +1,6 @@
-package ar.lamansys.messages;
+package ar.lamansys;
 
+import ar.lamansys.messages.MessageApp;
 import ar.lamansys.messages.application.AddUser;
 import ar.lamansys.messages.application.AssertUserExists;
 import ar.lamansys.messages.application.AssertUserNotExists;
@@ -15,16 +16,8 @@ import ar.lamansys.messages.infrastructure.output.impl.UserStorageSetImpl;
 
 public class MessageAppConfiguration {
 
-    static MessageApp messageAppSingleton = null;
 
-    public static MessageApp getBean() {
-        if (messageAppSingleton == null) {
-            messageAppSingleton = newBean();
-        }
-        return messageAppSingleton;
-    }
-
-    private static MessageApp newBean() {
+    public static TestMessageApp newBean() {
         var messageStorage = new MessageStorageListImpl();
         var userSessionStorage = new UserSessionStorageImpl();
         var userStorage =new UserStorageSetImpl();
@@ -40,7 +33,7 @@ public class MessageAppConfiguration {
         SendUserMessage sendUserMessage = new SendUserMessage(getUserSession, messageStorage, assertUserExists);
         SetUserSession setUserSession = new SetUserSession(userSessionStorage, assertUserExists);
 
-        return new MessageApp(
+        return new TestMessageApp(
                 addUser,
                 clearData,
                 fetchUserChat,

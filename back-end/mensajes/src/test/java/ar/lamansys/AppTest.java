@@ -1,24 +1,23 @@
 package ar.lamansys;
 
-import ar.lamansys.messages.MessageApp;
-import ar.lamansys.messages.MessageAppConfiguration;
-import ar.lamansys.messages.application.exception.UserExistsException;
-import ar.lamansys.messages.application.exception.UserNotExistsException;
-import ar.lamansys.messages.application.exception.UserSessionNotExists;
-import ar.lamansys.messages.domain.NewMessageBo;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import ar.lamansys.messages.application.exception.UserExistsException;
+import ar.lamansys.messages.application.exception.UserNotExistsException;
+import ar.lamansys.messages.application.exception.UserSessionNotExists;
+import ar.lamansys.messages.domain.NewMessageBo;
 
 class AppTest {
 
-    private MessageApp messageApp;
+    private TestMessageApp messageApp;
 
     @BeforeEach
     void setUp() throws UserNotExistsException, UserExistsException, UserSessionNotExists {
-        messageApp = MessageAppConfiguration.getBean();
+        messageApp = MessageAppConfiguration.newBean();
         messageApp.clearData();
         messageApp.addUser("buyer");
         messageApp.addUser("seller1");
@@ -47,7 +46,5 @@ class AppTest {
         assertEquals(1, messageApp.fetchUserChat("seller2").size(), "La cantidad de mensajes con seller2 no es la esperada");
         assertEquals(1, messageApp.fetchUserChat("seller3").size(), "La cantidad de mensajes con seller3 no es la esperada");
     }
-
-
 
 }

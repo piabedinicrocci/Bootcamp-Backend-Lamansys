@@ -12,3 +12,16 @@ services:
     ports:
       - "5432:5432"
     restart: always
+
+  bootcamp-backend:
+    build: ./back-end
+    container_name: bootcamp-backend
+    environment:
+      # Modo produccion
+      SPRING_PROFILES_ACTIVE: prod
+      DATABASE_IP_PORT: bootcamp-db:5432
+      DATABASE_NAME: bootcampDB
+      DATABASE_USER: postgres
+      DATABASE_PASS: Bootcamp123
+    ports:
+      - "8080:8080"

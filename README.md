@@ -57,7 +57,10 @@ Verificar versión:
 
 ## IntelliJ IDEA Community Edition
 
-Descargar desde [la web de jetbrains](https://www.jetbrains.com/idea/download/)
+1. Descargar desde [la web de jetbrains](https://www.jetbrains.com/idea/download/)
+2. Ejecutar `Run` sobre la clase principal.
+3. Agregar `-Dspring.profiles.active=dev` en el campo **"VM Options"** del Run Configuration.
+
 
 ### Compilar y Testear localmente
 
@@ -66,4 +69,14 @@ Estos comandos deberían funcionar siempre y a todos los desarrolladores:
 `./back-end/build.sh`
 
 `./back-end/run-tests.sh`
+
+### Iniciar localmente con docker
+
+Iniciar postgres
+
+`docker compose up bootcamp-db`
+
+Iniciar backend
+
+`docker compose up --build bootcamp-backend`
 
