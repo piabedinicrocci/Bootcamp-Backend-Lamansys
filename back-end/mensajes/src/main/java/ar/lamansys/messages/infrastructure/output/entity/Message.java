@@ -19,13 +19,13 @@ public class Message {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "owner_user_id")
+    @Column(name = "owner_user_id", nullable = false)
     private String ownerUserId;
 
-    @Column(name = "target_user_id")
+    @Column(name = "target_user_id", nullable = false)
     private String targetUserId;
 
-    @Column(name = "text")
+    @Column(name = "text", nullable = false, columnDefinition = "TEXT")
     private String text;
 
     public Message(MessageStoredBo message) {

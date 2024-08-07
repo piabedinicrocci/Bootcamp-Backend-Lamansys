@@ -1,0 +1,101 @@
+databaseChangeLog:
+  - logicalFilePath: changelog-v1
+
+  - changeSet:
+      id: create-table-message
+      comment: Adds table message
+      author: mateo
+      changes:
+        - createTable:
+            tableName: message
+            columns:
+              - column:
+                  constraints:
+                    primaryKey: true
+                    name: PK_message
+                    nullable: false
+                  name: id
+                  type: int
+                  autoIncrement: true
+              - column:
+                  constraints:
+                    nullable: false
+                  name: owner_user_id
+                  type: varchar
+              - column:
+                  constraints:
+                    nullable: false
+                  name: target_user_id
+                  type: varchar
+              - column:
+                  constraints:
+                    nullable: false
+                  name: text
+                  type: text
+
+  - changeSet:
+      id: create-table-app_user
+      comment: Adds table app_user
+      author: mateo
+      changes:
+        - createTable:
+            tableName: app_user
+            columns:
+              - column:
+                  constraints:
+                    primaryKey: true
+                    name: PK_app_user
+                    nullable: false
+                  name: id
+                  type: varchar
+              - column:
+                  constraints:
+                    nullable: false
+                  name: username
+                  type: varchar
+              - column:
+                  constraints:
+                    nullable: false
+                  name: password
+                  type: varchar
+              - column:
+                  constraints:
+                    nullable: false
+                  name: email
+                  type: varchar
+
+  - changeSet:
+      id: add-unique-constraints-table-app_user
+      comment: Adds unique constraints in table app_user
+      author: mateo
+      changes:
+        - addUniqueConstraint:
+            columnNames: username
+            constraintName: UQ_app_user_username
+            tableName: app_user
+            validate: true
+        - addUniqueConstraint:
+            columnNames: email
+            constraintName: UQ_app_user_email
+            tableName: app_user
+            validate: true
+      
+  - changeSet:
+      id: add-foreign-key-constraints-table-message
+      comment: Add foreign key constraints in table message
+      author: mateo
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: target_user_id
+            baseTableName: message
+            constraintName: FK_message_app_user_target_user_id
+            referencedColumnNames: id
+            referencedTableName: app_user
+            validate: true
+        - addForeignKeyConstraint:
+            baseColumnNames: owner_user_id
+            baseTableName: message
+            constraintName: FK_message_app_user_owner_user_id
+            referencedColumnNames: id
+            referencedTableName: app_user
+            validate: true
