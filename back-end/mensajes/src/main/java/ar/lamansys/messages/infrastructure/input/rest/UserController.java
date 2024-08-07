@@ -35,13 +35,13 @@ public class UserController {
     @PostMapping
     public ResponseEntity addUser(@RequestBody String userId) throws UserExistsException {
         addUser.run(userId);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/clear")
     public ResponseEntity<Object> clearUsers() {
         clearUsers.run();
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/session")
