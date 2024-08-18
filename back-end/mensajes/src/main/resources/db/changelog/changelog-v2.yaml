@@ -1,0 +1,156 @@
+databaseChangeLog:
+  - logicalFilePath: changelog-v1
+
+  - changeSet:
+      id: create-table-cart
+      comment: Adds table cart
+      author: pia
+      changes:
+        - createTable:
+            tableName: cart
+            columns:
+              - column:
+                  constraints:
+                    primaryKey: true
+                    name: PK_cart
+                    nullable: false
+                  name: id
+                  type: int
+                  autoIncrement: true
+              - column:
+                  constraints:
+                    nullable: false
+                  name: app_user_id
+                  type: varchar
+              - column:
+                  constraints:
+                    nullable: false
+                  name: total_price
+                  type: int
+              - column:
+                  constraints:
+                    nullable: false
+                  name: is_finalized
+                  type: boolean
+
+  - changeSet:
+      id: create-table-product
+      comment: Adds table product
+      author: pia
+      changes:
+        - createTable:
+            tableName: product
+            columns:
+              - column:
+                  constraints:
+                    primaryKey: true
+                    name: PK_product
+                    nullable: false
+                  name: id
+                  type: int
+                  autoIncrement: true
+              - column:
+                  constraints:
+                    nullable: false
+                  name: name_product
+                  type: varchar
+              - column:
+                  constraints:
+                    nullable: false
+                  name: stock
+                  type: int
+              - column:
+                  constraints:
+                    nullable: false
+                  name: unit_price
+                  type: int
+              - column:
+                  constraints:
+                    nullable: false
+                  name: app_user_id
+                  type: varchar
+
+  - changeSet:
+      id: create-table-cart_product
+      comment: Adds table cart_product
+      author: flor
+      changes:
+        - createTable:
+            tableName: cart_product
+            columns:
+              - column:
+                  #constraints:
+                  #primaryKey: true
+                  #name: PK_cart_product
+                  #nullable: false
+                  name: cart_id
+                  type: int
+              - column:
+                  #constraints:
+                  #primaryKey: true
+                  #name: PK_cart_product
+                  #nullable: false
+                  name: product_id
+                  type: int
+              - column:
+                  constraints:
+                    nullable: false
+                  name: quantity
+                  type: int
+              - column:
+                  constraints:
+                    nullable: false
+                  name: quantity_price
+                  type: int
+
+  - changeSet:
+      id: add-foreign-key-constraints-table-cart
+      comment: Add foreign key constraints in table cart
+      author: flor
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: app_user_id
+            baseTableName: cart
+            constraintName: FK_cart_app_user_app_user_id
+            referencedColumnNames: id
+            referencedTableName: app_user
+            validate: true
+
+  - changeSet:
+      id: add-foreign-key-constraints-table-product
+      comment: Add foreign key constraints in table product
+      author: pia
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: app_user_id
+            baseTableName: product
+            constraintName: FK_product_app_user_app_user_id
+            referencedColumnNames: id
+            referencedTableName: app_user
+            validate: true
+
+  - changeSet:
+      id: add-foreign-key-constraints-table-cart_product
+      comment: Add foreign key constraints in table cart_product
+      author: flor
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: cart_id
+            baseTableName: cart_product
+            constraintName: FK_cart_product_cart_cart_id
+            referencedColumnNames: id
+            referencedTableName: cart
+            validate: true
+        - addForeignKeyConstraint:
+            baseColumnNames: product_id
+            baseTableName: cart_product
+            constraintName: FK_cart_product_product_product_id
+            referencedColumnNames: id
+            referencedTableName: product
+            validate: true
+        - addPrimaryKey:
+            clustered: true
+            columnNames: cart_id, product_id
+            constraintName: PK_cart_product
+            tableName: cart_product
+            validate: true
