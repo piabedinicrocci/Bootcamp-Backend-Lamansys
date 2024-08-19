@@ -27,6 +27,9 @@ public class Cart {
     @Column(name = "is_finalized", nullable = false)
     private Boolean isFinalized = false;
 
+    @Column(name="seller_id", nullable = false)
+    private String sellerId;
+
     public Cart(Integer id) {
         this.id = id;
     }

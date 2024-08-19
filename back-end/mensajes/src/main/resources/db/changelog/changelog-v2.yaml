@@ -1,5 +1,5 @@
 databaseChangeLog:
-  - logicalFilePath: changelog-v1
+  - logicalFilePath: changelog-v2
 
   - changeSet:
       id: create-table-cart
@@ -79,17 +79,17 @@ databaseChangeLog:
             tableName: cart_product
             columns:
               - column:
-                  #constraints:
+                  constraints:
                   #primaryKey: true
                   #name: PK_cart_product
-                  #nullable: false
+                   nullable: false
                   name: cart_id
                   type: int
               - column:
-                  #constraints:
+                  constraints:
                   #primaryKey: true
                   #name: PK_cart_product
-                  #nullable: false
+                   nullable: false
                   name: product_id
                   type: int
               - column:
@@ -149,8 +149,34 @@ databaseChangeLog:
             referencedTableName: product
             validate: true
         - addPrimaryKey:
-            clustered: true
+            #clustered: true
             columnNames: cart_id, product_id
             constraintName: PK_cart_product
             tableName: cart_product
+            validate: true
+
+  - changeSet:
+      id: add-column-cart-seller_id
+      comment: Adds column seller_id on table cart
+      author: pia
+      changes:
+        - addColumn:
+            tableName: cart
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                  name: seller_id
+                  type: varchar
+  - changeSet:
+      id: add-foreign-key-constraints-table-cart
+      comment: Add foreign key constraints in table cart
+      author: pia
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: seller_id
+            baseTableName: cart
+            constraintName: FK_product_app_user_seller_id
+            referencedColumnNames: id
+            referencedTableName: app_user
             validate: true
