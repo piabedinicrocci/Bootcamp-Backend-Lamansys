@@ -1,8 +1,8 @@
 package ar.lamansys.messages.infrastructure.output.impl;
 
-import ar.lamansys.messages.domain.MessageStoredBo;
+import ar.lamansys.messages.domain.message.MessageStoredBo;
 import ar.lamansys.messages.infrastructure.output.repository.MessageRepository;
-import ar.lamansys.messages.infrastructure.output.MessageStorage;
+import ar.lamansys.messages.application.message.port.MessageStorage;
 import ar.lamansys.messages.infrastructure.output.entity.Message;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Primary;

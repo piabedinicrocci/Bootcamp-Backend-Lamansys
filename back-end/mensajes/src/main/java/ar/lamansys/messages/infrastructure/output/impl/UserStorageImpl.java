@@ -1,7 +1,7 @@
 package ar.lamansys.messages.infrastructure.output.impl;
 
 import ar.lamansys.messages.infrastructure.output.repository.AppUserRepository;
-import ar.lamansys.messages.infrastructure.output.UserStorage;
+import ar.lamansys.messages.application.user.port.UserStorage;
 import ar.lamansys.messages.infrastructure.output.entity.AppUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Primary;

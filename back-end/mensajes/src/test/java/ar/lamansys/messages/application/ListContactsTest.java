@@ -6,17 +6,18 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.List;
 
+import ar.lamansys.messages.application.message.ListContacts;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import ar.lamansys.messages.application.exception.UserSessionNotExists;
-import ar.lamansys.messages.domain.MessageStoredBo;
-import ar.lamansys.messages.infrastructure.output.MessageStorage;
+import ar.lamansys.messages.domain.message.MessageStoredBo;
+import ar.lamansys.messages.application.message.port.MessageStorage;
 
 class ListContactsTest {
 
-    private final GetUserSession getUserSession =
-            Mockito.mock(GetUserSession.class);
+    private final ClearData.GetUserSession getUserSession =
+            Mockito.mock(ClearData.GetUserSession.class);
 
     private final MessageStorage messageStorage =
             Mockito.mock(MessageStorage.class);

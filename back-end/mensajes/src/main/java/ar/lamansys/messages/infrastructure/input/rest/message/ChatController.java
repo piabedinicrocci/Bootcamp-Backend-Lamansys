@@ -1,11 +1,10 @@
-package ar.lamansys.messages.infrastructure.input.rest;
+package ar.lamansys.messages.infrastructure.input.rest.message;
 
-import ar.lamansys.messages.application.FetchUserChat;
+import ar.lamansys.messages.application.message.FetchUserChat;
 import ar.lamansys.messages.application.exception.UserNotExistsException;
 import ar.lamansys.messages.application.exception.UserSessionNotExists;
-import ar.lamansys.messages.domain.ChatMessageBo;
+import ar.lamansys.messages.domain.message.ChatMessageBo;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;

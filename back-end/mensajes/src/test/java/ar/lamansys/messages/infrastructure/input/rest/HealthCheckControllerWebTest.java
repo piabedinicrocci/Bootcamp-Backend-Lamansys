@@ -12,7 +12,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
 import ar.lamansys.messages.MessageApp;
-import ar.lamansys.messages.infrastructure.output.UserSessionStorage;
+import ar.lamansys.messages.application.user.port.UserSessionStorage;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(value = {

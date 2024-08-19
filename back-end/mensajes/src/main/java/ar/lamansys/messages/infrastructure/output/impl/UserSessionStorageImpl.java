@@ -1,6 +1,6 @@
 package ar.lamansys.messages.infrastructure.output.impl;
 
-import ar.lamansys.messages.infrastructure.output.UserSessionStorage;
+import ar.lamansys.messages.application.user.port.UserSessionStorage;
 import org.springframework.stereotype.Repository;
 
 import java.io.BufferedReader;

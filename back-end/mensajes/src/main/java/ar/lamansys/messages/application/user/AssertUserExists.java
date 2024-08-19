@@ -1,7 +1,7 @@
-package ar.lamansys.messages.application;
+package ar.lamansys.messages.application.user;
 
 import ar.lamansys.messages.application.exception.UserNotExistsException;
-import ar.lamansys.messages.infrastructure.output.UserStorage;
+import ar.lamansys.messages.application.user.port.UserStorage;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

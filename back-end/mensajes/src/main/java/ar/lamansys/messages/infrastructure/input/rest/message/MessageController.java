@@ -1,10 +1,10 @@
-package ar.lamansys.messages.infrastructure.input.rest;
+package ar.lamansys.messages.infrastructure.input.rest.message;
 
-import ar.lamansys.messages.application.ClearMessages;
-import ar.lamansys.messages.application.SendUserMessage;
+import ar.lamansys.messages.application.message.ClearMessages;
+import ar.lamansys.messages.application.message.SendUserMessage;
 import ar.lamansys.messages.application.exception.UserNotExistsException;
 import ar.lamansys.messages.application.exception.UserSessionNotExists;
-import ar.lamansys.messages.domain.NewMessageBo;
+import ar.lamansys.messages.domain.message.NewMessageBo;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,6 +1,6 @@
 package ar.lamansys.messages.infrastructure.output.impl;
 
-import ar.lamansys.messages.infrastructure.output.UserStorage;
+import ar.lamansys.messages.application.user.port.UserStorage;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import org.springframework.stereotype.Repository;

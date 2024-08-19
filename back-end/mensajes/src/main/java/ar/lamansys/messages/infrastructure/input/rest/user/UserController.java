@@ -1,14 +1,13 @@
-package ar.lamansys.messages.infrastructure.input.rest;
+package ar.lamansys.messages.infrastructure.input.rest.user;
 
-import ar.lamansys.messages.application.AddUser;
-import ar.lamansys.messages.application.ClearUsers;
-import ar.lamansys.messages.application.GetUserSession;
-import ar.lamansys.messages.application.SetUserSession;
+import ar.lamansys.messages.application.ClearData;
+import ar.lamansys.messages.application.user.AddUser;
+import ar.lamansys.messages.application.user.ClearUsers;
+import ar.lamansys.messages.application.user.SetUserSession;
 import ar.lamansys.messages.application.exception.UserExistsException;
 import ar.lamansys.messages.application.exception.UserNotExistsException;
 import ar.lamansys.messages.application.exception.UserSessionNotExists;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,7 +23,7 @@ public class UserController {
 
     private final AddUser addUser;
     private final ClearUsers clearUsers;
-    private final GetUserSession getUserSession;
+    private final ClearData.GetUserSession getUserSession;
     private final SetUserSession setUserSession;
 
     @GetMapping("/session")

@@ -1,6 +1,6 @@
-package ar.lamansys.messages.infrastructure.input.rest;
+package ar.lamansys.messages.infrastructure.input.rest.message;
 
-import ar.lamansys.messages.application.ListContacts;
+import ar.lamansys.messages.application.message.ListContacts;
 import ar.lamansys.messages.application.exception.UserSessionNotExists;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;

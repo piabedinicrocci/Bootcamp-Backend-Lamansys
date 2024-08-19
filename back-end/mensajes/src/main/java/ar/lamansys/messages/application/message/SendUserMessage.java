@@ -1,17 +1,19 @@
-package ar.lamansys.messages.application;
+package ar.lamansys.messages.application.message;
 
+import ar.lamansys.messages.application.ClearData;
+import ar.lamansys.messages.application.user.AssertUserExists;
 import ar.lamansys.messages.application.exception.UserNotExistsException;
 import ar.lamansys.messages.application.exception.UserSessionNotExists;
-import ar.lamansys.messages.domain.MessageMapper;
-import ar.lamansys.messages.domain.NewMessageBo;
-import ar.lamansys.messages.infrastructure.output.MessageStorage;
+import ar.lamansys.messages.domain.message.MessageMapper;
+import ar.lamansys.messages.domain.message.NewMessageBo;
+import ar.lamansys.messages.application.message.port.MessageStorage;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @AllArgsConstructor
 @Service
 public class SendUserMessage {
-    private final GetUserSession getUserSession;
+    private final ClearData.GetUserSession getUserSession;
     private final MessageStorage messageStorage;
     private final AssertUserExists assertUserExists;
 

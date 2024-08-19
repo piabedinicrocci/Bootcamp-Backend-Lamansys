@@ -1,4 +1,4 @@
-package ar.lamansys.messages.infrastructure.output;
+package ar.lamansys.messages.application.user.port;
 
 public interface UserStorage {
 

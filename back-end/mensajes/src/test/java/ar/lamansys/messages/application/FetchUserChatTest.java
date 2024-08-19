@@ -2,9 +2,11 @@ package ar.lamansys.messages.application;
 
 import ar.lamansys.messages.application.exception.UserNotExistsException;
 import ar.lamansys.messages.application.exception.UserSessionNotExists;
-import ar.lamansys.messages.domain.ChatMessageBo;
-import ar.lamansys.messages.domain.MessageStoredBo;
-import ar.lamansys.messages.infrastructure.output.MessageStorage;
+import ar.lamansys.messages.application.message.FetchUserChat;
+import ar.lamansys.messages.application.user.AssertUserExists;
+import ar.lamansys.messages.domain.message.ChatMessageBo;
+import ar.lamansys.messages.domain.message.MessageStoredBo;
+import ar.lamansys.messages.application.message.port.MessageStorage;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,7 +24,7 @@ import static org.mockito.Mockito.when;
 class FetchUserChatTest {
 
     @Mock
-    private GetUserSession getUserSession;
+    private ClearData.GetUserSession getUserSession;
     @Mock
     private MessageStorage messageStorage;
     @Mock

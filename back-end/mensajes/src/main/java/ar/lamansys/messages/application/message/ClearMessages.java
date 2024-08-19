@@ -1,6 +1,6 @@
-package ar.lamansys.messages.application;
+package ar.lamansys.messages.application.message;
 
-import ar.lamansys.messages.infrastructure.output.MessageStorage;
+import ar.lamansys.messages.application.message.port.MessageStorage;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

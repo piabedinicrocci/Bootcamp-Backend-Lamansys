@@ -1,0 +1,19 @@
+package ar.lamansys.messages.infrastructure.output.impl;
+
+import ar.lamansys.messages.application.product.port.ProductStorage;
+import ar.lamansys.messages.domain.product.ProductStoredBo;
+import ar.lamansys.messages.infrastructure.output.repository.ProductRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.util.stream.Stream;
+
+@RequiredArgsConstructor
+@Service
+public class ProductStorageImpl implements ProductStorage {
+    private final ProductRepository repository;
+    @Override
+    public Stream<ProductStoredBo> findAllByUserId(String sellerId) {
+        return repository.findAllByUserId(sellerId);
+    }
+}

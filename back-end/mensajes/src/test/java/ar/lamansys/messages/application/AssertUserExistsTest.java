@@ -1,7 +1,8 @@
 package ar.lamansys.messages.application;
 
 import ar.lamansys.messages.application.exception.UserNotExistsException;
-import ar.lamansys.messages.infrastructure.output.UserStorage;
+import ar.lamansys.messages.application.user.AssertUserExists;
+import ar.lamansys.messages.application.user.port.UserStorage;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 

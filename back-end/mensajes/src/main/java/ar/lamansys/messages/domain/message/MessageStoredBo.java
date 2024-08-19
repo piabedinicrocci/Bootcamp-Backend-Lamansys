@@ -1,4 +1,4 @@
-package ar.lamansys.messages.domain;
+package ar.lamansys.messages.domain.message;
 
 import lombok.AllArgsConstructor;
 import lombok.Value;

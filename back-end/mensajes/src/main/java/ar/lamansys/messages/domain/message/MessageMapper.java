@@ -1,4 +1,4 @@
-package ar.lamansys.messages.domain;
+package ar.lamansys.messages.domain.message;
 
 public class MessageMapper {
     private MessageMapper() {}

@@ -1,20 +1,21 @@
-package ar.lamansys.messages.application;
+package ar.lamansys.messages.application.message;
 
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import ar.lamansys.messages.application.ClearData;
 import ar.lamansys.messages.application.exception.UserSessionNotExists;
-import ar.lamansys.messages.domain.MessageStoredBo;
+import ar.lamansys.messages.domain.message.MessageStoredBo;
 import ar.lamansys.messages.infrastructure.output.LogUtil;
-import ar.lamansys.messages.infrastructure.output.MessageStorage;
+import ar.lamansys.messages.application.message.port.MessageStorage;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @AllArgsConstructor
 @Service
 public class ListContacts {
-    private final GetUserSession getUserSession;
+    private final ClearData.GetUserSession getUserSession;
     private final MessageStorage messageStorage;
 
     public List<String> run() throws UserSessionNotExists {

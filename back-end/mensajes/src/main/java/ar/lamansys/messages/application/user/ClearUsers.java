@@ -1,7 +1,8 @@
-package ar.lamansys.messages.application;
+package ar.lamansys.messages.application.user;
 
-import ar.lamansys.messages.infrastructure.output.UserSessionStorage;
-import ar.lamansys.messages.infrastructure.output.UserStorage;
+import ar.lamansys.messages.application.message.ClearMessages;
+import ar.lamansys.messages.application.user.port.UserSessionStorage;
+import ar.lamansys.messages.application.user.port.UserStorage;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
