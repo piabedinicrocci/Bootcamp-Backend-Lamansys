@@ -25,7 +25,7 @@ public class ListProductsTest {
         // Arrange
         String userId = "user1";
         List<ProductStoredBo> expectedProducts = List.of(
-                new ProductStoredBo( "Product1", 40, 600)
+                new ProductStoredBo( "Product1", 40, 600, userId)
         );
         doNothing().when(assertUserExists).run(userId);
         when(productStorage.findAllByUserId(userId)).thenReturn(expectedProducts.stream());
