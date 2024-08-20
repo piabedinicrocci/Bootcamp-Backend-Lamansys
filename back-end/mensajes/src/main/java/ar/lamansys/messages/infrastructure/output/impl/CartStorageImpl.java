@@ -2,6 +2,7 @@ package ar.lamansys.messages.infrastructure.output.impl;
 
 import ar.lamansys.messages.application.cart.port.CartStorage;
 import ar.lamansys.messages.domain.cart.CartStoredBo;
+import ar.lamansys.messages.infrastructure.mapper.CartMapper;
 import ar.lamansys.messages.infrastructure.output.entity.Cart;
 import ar.lamansys.messages.infrastructure.output.repository.CartRepository;
 import lombok.AllArgsConstructor;
@@ -11,10 +12,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class CartStorageImpl implements CartStorage {
     private final CartRepository cartRepository;
+    private final CartMapper cartMapper;
 
     @Override
-    public void createCart(String appUserId, Integer totalPrice, Boolean isFinalized, String sellerId) {
-        cartRepository.save(new Cart(appUserId,totalPrice,isFinalized,sellerId));
+    public CartStoredBo createCart(String appUserId, Integer totalPrice, Boolean isFinalized, String sellerId) {
+        Cart cart = cartRepository.save(new Cart(appUserId,totalPrice,isFinalized,sellerId));
+        return cartMapper.entityToCartStoredBo(cart);
     }
 
     @Override

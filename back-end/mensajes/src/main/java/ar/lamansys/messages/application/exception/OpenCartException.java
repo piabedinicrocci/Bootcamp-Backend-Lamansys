@@ -3,7 +3,7 @@ package ar.lamansys.messages.application.exception;
 import lombok.Getter;
 
 @Getter
-public class OpenCartException extends Throwable {
+public class OpenCartException extends RuntimeException {
     private String idSeller;
 
     public OpenCartException(String idSeller) {

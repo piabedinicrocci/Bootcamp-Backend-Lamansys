@@ -3,7 +3,7 @@ package ar.lamansys.messages.application.exception;
 import lombok.Getter;
 
 @Getter
-public class StockNotAvailableException extends Throwable {
+public class StockNotAvailableException extends RuntimeException {
     private Integer productId;
     private Integer quantity;
 

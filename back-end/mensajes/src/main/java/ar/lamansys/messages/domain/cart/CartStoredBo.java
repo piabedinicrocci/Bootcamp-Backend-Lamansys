@@ -6,6 +6,7 @@ import lombok.Value;
 @AllArgsConstructor
 @Value
 public class CartStoredBo {
+    private Integer id;
     private String appUserId;
     private Integer totalPrice;
     private Boolean isFinalized;

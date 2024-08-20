@@ -3,7 +3,7 @@ package ar.lamansys.messages.application.exception;
 import lombok.Getter;
 
 @Getter
-public class ProductNotExistsException extends Throwable {
+public class ProductNotExistsException extends RuntimeException {
     private Integer productId;
 
     public ProductNotExistsException(Integer productId) {

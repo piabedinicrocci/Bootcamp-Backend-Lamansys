@@ -15,7 +15,7 @@ public interface CartRepository extends JpaRepository<Cart, Integer> {
     @Query("SELECT c FROM Cart c WHERE c.appUserId = :appUserId AND c.sellerId = :sellerId")
     Optional<Cart> findByAppUserIdAndSellerId(@Param("appUserId") String appUserId, @Param("sellerId") String sellerId);
 
-    @Query("SELECT NEW ar.lamansys.messages.domain.cart.CartStoredBo(c.appUserId, c.totalPrice, c.isFinalized, c.sellerId) " +
+    @Query("SELECT NEW ar.lamansys.messages.domain.cart.CartStoredBo(c.id,c.appUserId, c.totalPrice, c.isFinalized, c.sellerId) " +
             "FROM Cart c " +
             "WHERE c.appUserId = :userId AND c.sellerId = :sellerId AND c.isFinalized = false")
     CartStoredBo getCartExists(@Param("userId") String userId, @Param("sellerId") String idSeller);

@@ -2,6 +2,7 @@ package ar.lamansys.messages.infrastructure.input.rest.cart;
 
 import ar.lamansys.messages.application.exception.OpenCartException;
 import ar.lamansys.messages.application.exception.StockNotAvailableException;
+import ar.lamansys.messages.domain.cart.CartStoredBo;
 import ar.lamansys.messages.infrastructure.DTO.CartRequestDTO;
 import ar.lamansys.messages.infrastructure.mapper.CartMapper;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,8 @@ import ar.lamansys.messages.application.cart.CreateCart;
 import ar.lamansys.messages.application.exception.ProductNotExistsException;
 import ar.lamansys.messages.application.exception.UserNotExistsException;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/carts")
@@ -25,11 +28,9 @@ public class CartController {
     }
 
     @PostMapping("/{userId}")
-    public ResponseEntity createCart(@PathVariable String userId, @RequestBody CartRequestDTO cartDTO)
+    public ResponseEntity<CartStoredBo> createCart(@PathVariable String userId, @ Valid @RequestBody CartRequestDTO cartDTO)
             throws UserNotExistsException, ProductNotExistsException, OpenCartException, StockNotAvailableException {
-        createCart.run(userId, cartMapper.toNewCartBo(cartDTO));
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(createCart.run(userId, cartMapper.toNewCartBo(cartDTO)));
     }
-
 
 }
