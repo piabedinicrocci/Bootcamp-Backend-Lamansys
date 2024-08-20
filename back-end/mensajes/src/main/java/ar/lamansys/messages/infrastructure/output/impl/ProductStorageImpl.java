@@ -6,14 +6,37 @@ import ar.lamansys.messages.infrastructure.output.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.stream.Stream;
 
 @RequiredArgsConstructor
 @Service
 public class ProductStorageImpl implements ProductStorage {
     private final ProductRepository repository;
+
     @Override
     public Stream<ProductStoredBo> findAllByUserId(String sellerId) {
         return repository.findAllByUserId(sellerId);
     }
+
+    @Override
+    public boolean exists(Integer productId) {
+        return repository.existsById(productId);
+    }
+
+    @Override
+    public Integer getStock(Integer productId) {
+        return repository.getStock(productId);
+    }
+
+    @Override
+    public String getSellerByProductId(Integer productId) {
+        return repository.getSellerByProductId(productId);
+    }
+
+    @Override
+    public Integer getUnitPrice(Integer productId) {
+        return repository.getUnitPrice(productId);
+    }
+
 }

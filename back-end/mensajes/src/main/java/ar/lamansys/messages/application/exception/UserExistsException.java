@@ -4,7 +4,7 @@ import lombok.Getter;
 
 @Getter
 public class UserExistsException extends Throwable {
-    String userId;
+    private String userId;
 
     public UserExistsException(String userId) {
         super(String.format("User %s exists", userId));
