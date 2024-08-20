@@ -35,7 +35,7 @@ public class ProductControllerTest {
         // Arrange
         String userId = "user1";
         List<ProductStoredBo> expectedProducts = List.of(
-                new ProductStoredBo( "Product1", 40, 600)
+                new ProductStoredBo( "Product1", 40, 600, userId)
         );
         when(listProducts.run(userId)).thenReturn(expectedProducts);
 
