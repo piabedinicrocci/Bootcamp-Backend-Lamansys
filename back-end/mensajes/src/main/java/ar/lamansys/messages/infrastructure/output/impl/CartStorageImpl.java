@@ -8,6 +8,8 @@ import ar.lamansys.messages.infrastructure.output.repository.CartRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @AllArgsConstructor
 @Service
 public class CartStorageImpl implements CartStorage {
@@ -23,6 +25,12 @@ public class CartStorageImpl implements CartStorage {
     @Override
     public CartStoredBo getCartExists(String userId, String idSeller) {
         return cartRepository.getCartExists(userId,idSeller);
+    }
+
+    @Override
+    public Optional<CartStoredBo> findByIdAndAppUserId(Integer cartId, String appUserId) {
+        return cartRepository.findByIdAndAppUserId(cartId, appUserId)
+                .map(cartMapper::entityToCartStoredBo);
     }
 
 }

@@ -20,6 +20,8 @@ public interface CartRepository extends JpaRepository<Cart, Integer> {
             "WHERE c.appUserId = :userId AND c.sellerId = :sellerId AND c.isFinalized = false")
     CartStoredBo getCartExists(@Param("userId") String userId, @Param("sellerId") String idSeller);
 
+    Optional<Cart> findByIdAndAppUserId(Integer id, String appUserId);
+
 
 
 }

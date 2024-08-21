@@ -1,12 +1,15 @@
 package ar.lamansys.messages.infrastructure.output.repository;
 
+import ar.lamansys.messages.domain.cartProduct.NewCartProductBo;
 import ar.lamansys.messages.infrastructure.output.entity.CartProduct;
 import ar.lamansys.messages.infrastructure.output.entity.CartProductId;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
 import java.util.stream.Stream;
 
 @Repository
@@ -14,4 +17,11 @@ public interface CartProductRepository extends JpaRepository<CartProduct, CartPr
 
     @Query("SELECT cp FROM CartProduct cp WHERE cp.id.cartId = :cartId")
     Stream<CartProduct> findAllByCartId(@Param("cartId") Integer cartId);
+
+    @Modifying
+    @Query("UPDATE CartProduct cp SET cp.quantity = :quantity WHERE cp.id.cartId = :cartId AND cp.id.productId = :productId")
+    int updateQuantity(@Param("quantity") Integer quantity, @Param("cartId") Integer cartId, @Param("productId") Integer productId);
+
+    @Query("SELECT NEW ar.lamansys.messages.domain.cartProduct.NewCartProductBo(cp.id.cartId, cp.id.productId,cp.quantity, cp.quantityPrice) FROM CartProduct cp WHERE cp.id.cartId = :cartId AND cp.id.productId = :productId")
+    NewCartProductBo findByCartIdAndProductId(@Param("cartId") Integer cartId, @Param("productId") Integer productId);
 }

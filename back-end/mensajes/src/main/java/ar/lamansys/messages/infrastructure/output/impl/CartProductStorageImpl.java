@@ -8,14 +8,26 @@ import ar.lamansys.messages.infrastructure.output.repository.CartProductReposito
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @AllArgsConstructor
 @Service
 public class CartProductStorageImpl implements CartProductStorage {
     private final CartProductRepository cartProductRepository;
 
+
     @Override
     public void createCartProduct(NewCartProductBo newCartProductBo) {
         cartProductRepository.save(new CartProduct(new CartProductId(newCartProductBo.getCartId(),newCartProductBo.getProductId()),newCartProductBo.getQuantity(),newCartProductBo.getQuantityPrice()));
+    }
+    @Override
+    public int updateQuantity(Integer cartId, Integer productId, Integer newQuantity){
+         return cartProductRepository.updateQuantity(newQuantity,cartId, productId);
+    }
+
+    @Override
+    public NewCartProductBo findByCartIdAndProductId(Integer cartId, Integer productId) {
+        return cartProductRepository.findByCartIdAndProductId(cartId, productId);
     }
 
 }
