@@ -15,23 +15,40 @@ import java.util.Map;
 public class MessageExceptionHandler {
 
     @ExceptionHandler({UserNotExistsException.class, UserSessionNotExists.class, ProductNotExistsException.class})
-    public ResponseEntity<String> notExistsHandler(Exception ex){
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    public ResponseEntity<Map<String, String>> notExistsHandler(Exception ex) {
+        Map<String, String> errorResponse = new HashMap<>();
+        errorResponse.put("code", "NOT_FOUND");
+        errorResponse.put("message", ex.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
-
     @ExceptionHandler(UserExistsException.class)
-    public ResponseEntity<String> existsHandler(Exception ex){
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+    public ResponseEntity<Map<String, String>> existsHandler(Exception ex) {
+        Map<String, String> errorResponse = new HashMap<>();
+        errorResponse.put("code", "BAD_REQUEST");
+        errorResponse.put("message", ex.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+    }
+    @ExceptionHandler(CartUserNotExistsException.class)
+    public ResponseEntity<Map<String, String>> cartUserNotExistHandler(Exception ex) {
+        Map<String, String> errorResponse = new HashMap<>();
+        errorResponse.put("code", "CART_MISMATCH");
+        errorResponse.put("message", ex.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(OpenCartException.class)
-    public ResponseEntity<String> openCartHandler(Exception ex){
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+    public ResponseEntity<Map<String, String>> openCartHandler(Exception ex) {
+        Map<String, String> errorResponse = new HashMap<>();
+        errorResponse.put("code", "OPEN_CART_ALREADY_EXIST");
+        errorResponse.put("message", ex.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
-
     @ExceptionHandler(StockNotAvailableException.class)
-    public ResponseEntity<String> stockNotAvailableHandler(Exception ex){
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+    public ResponseEntity<Map<String, String>> stockNotAvailableHandler(Exception ex) {
+        Map<String, String> errorResponse = new HashMap<>();
+        errorResponse.put("code", "INSUFFICIENT_STOCK");
+        errorResponse.put("message", ex.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -44,5 +61,13 @@ public class MessageExceptionHandler {
         });
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
+    @ExceptionHandler(ProductNotInCartException.class)
+    public ResponseEntity<Map<String, String>> productNotInCartHandler(ProductNotInCartException ex) {
+        Map<String, String> errorResponse = new HashMap<>();
+        errorResponse.put("code", "PRODUCT_IN_CART_MISMATCH");
+        errorResponse.put("message", ex.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+    }
+
 
 }
