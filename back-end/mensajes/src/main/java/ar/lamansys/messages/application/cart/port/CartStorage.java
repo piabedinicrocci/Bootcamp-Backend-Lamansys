@@ -15,4 +15,5 @@ public interface CartStorage {
 
     void updateTotalPrice(Integer cartId, Integer newTotalPrice);
 
+    void deleteCartById(Integer cartId);
 }

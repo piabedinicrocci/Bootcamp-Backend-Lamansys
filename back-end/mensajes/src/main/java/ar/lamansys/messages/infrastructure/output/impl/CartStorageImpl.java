@@ -37,5 +37,9 @@ public class CartStorageImpl implements CartStorage {
     public void updateTotalPrice(Integer cartId, Integer newTotalPrice) {
          cartRepository.updateTotalPrice(cartId, newTotalPrice);
     }
+    @Override
+    public void deleteCartById(Integer cartId){
+        cartRepository.deleteById(cartId);
+    }
 
 }

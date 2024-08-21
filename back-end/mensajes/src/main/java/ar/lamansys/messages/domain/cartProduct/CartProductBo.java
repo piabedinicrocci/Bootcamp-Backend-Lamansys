@@ -5,7 +5,7 @@ import lombok.Value;
 
 @AllArgsConstructor
 @Value
-public class NewCartProductBo {
+public class CartProductBo {
     private Integer cartId;
     private Integer productId;
     private Integer quantity;

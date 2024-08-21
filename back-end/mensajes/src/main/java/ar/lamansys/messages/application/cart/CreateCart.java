@@ -12,8 +12,7 @@ import ar.lamansys.messages.application.exception.ProductNotExistsException;
 import ar.lamansys.messages.application.exception.UserNotExistsException;
 import ar.lamansys.messages.domain.cart.CartStoredBo;
 import ar.lamansys.messages.domain.cart.NewCartBo;
-import ar.lamansys.messages.domain.cartProduct.NewCartProductBo;
-import ar.lamansys.messages.infrastructure.output.entity.Cart;
+import ar.lamansys.messages.domain.cartProduct.CartProductBo;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -47,7 +46,7 @@ public class CreateCart {
         //crea el carrito en tabla cart
         CartStoredBo cart= cartStorage.createCart(userId, totalPrice, false, sellerId);
         //crea el carrito en tabla intermedia cart_product
-        cartProductStorage.createCartProduct(new NewCartProductBo(cart.getId(),cartBO.getProductId(),quantity,totalPrice));
+        cartProductStorage.createCartProduct(new CartProductBo(cart.getId(),cartBO.getProductId(),quantity,totalPrice));
         return cart;
     }
 }
