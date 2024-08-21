@@ -33,4 +33,9 @@ public class CartStorageImpl implements CartStorage {
                 .map(cartMapper::entityToCartStoredBo);
     }
 
+    @Override
+    public void updateTotalPrice(Integer cartId, Integer newTotalPrice) {
+         cartRepository.updateTotalPrice(cartId, newTotalPrice);
+    }
+
 }

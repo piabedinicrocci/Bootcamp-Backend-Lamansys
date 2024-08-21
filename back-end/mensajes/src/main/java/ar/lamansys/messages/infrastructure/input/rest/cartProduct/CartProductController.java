@@ -16,10 +16,7 @@ public class CartProductController {
 
     @PutMapping("/{cartId}/product/{productId}/user/{userId}")
     public ResponseEntity<String> updateQuantity(@PathVariable String userId, @PathVariable Integer cartId, @PathVariable Integer productId, @Valid @RequestBody QuantityDTO quantity){
-
-        if(updateQuantity.run(cartId, userId, productId, quantity.getQuantity())==0){
-            return ResponseEntity.notFound().build();
-        }
+        updateQuantity.run(cartId, userId, productId, quantity.getQuantity());
         return ResponseEntity.ok("The quantity of the product was succesfully changed");
     }
 

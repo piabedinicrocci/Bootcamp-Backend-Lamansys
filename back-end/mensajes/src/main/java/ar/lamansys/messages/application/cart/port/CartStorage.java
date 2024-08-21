@@ -12,4 +12,7 @@ public interface CartStorage {
 
     Optional<CartStoredBo> findByIdAndAppUserId(Integer id, String appUserId);
 
+
+    void updateTotalPrice(Integer cartId, Integer newTotalPrice);
+
 }

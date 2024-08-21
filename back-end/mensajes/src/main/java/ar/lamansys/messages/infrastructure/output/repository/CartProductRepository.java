@@ -19,9 +19,12 @@ public interface CartProductRepository extends JpaRepository<CartProduct, CartPr
     Stream<CartProduct> findAllByCartId(@Param("cartId") Integer cartId);
 
     @Modifying
-    @Query("UPDATE CartProduct cp SET cp.quantity = :quantity WHERE cp.id.cartId = :cartId AND cp.id.productId = :productId")
-    int updateQuantity(@Param("quantity") Integer quantity, @Param("cartId") Integer cartId, @Param("productId") Integer productId);
+    @Query("UPDATE CartProduct cp SET cp.quantity = :quantity, cp.quantityPrice = :quantityPrice WHERE cp.id.cartId = :cartId AND cp.id.productId = :productId")
+    int updateQuantity(@Param("quantity") Integer quantity, @Param("cartId") Integer cartId, @Param("productId") Integer productId, @Param("quantityPrice") Integer quantityPrice);
 
     @Query("SELECT NEW ar.lamansys.messages.domain.cartProduct.NewCartProductBo(cp.id.cartId, cp.id.productId,cp.quantity, cp.quantityPrice) FROM CartProduct cp WHERE cp.id.cartId = :cartId AND cp.id.productId = :productId")
     NewCartProductBo findByCartIdAndProductId(@Param("cartId") Integer cartId, @Param("productId") Integer productId);
+
+    @Query("SELECT sum(cp.quantityPrice) FROM CartProduct cp WHERE cp.id.cartId = :cartId")
+    Integer calculateTotalPrice(@Param("cartId") Integer cartId);
 }

@@ -3,6 +3,7 @@ package ar.lamansys.messages.infrastructure.output.repository;
 import ar.lamansys.messages.domain.cart.CartStoredBo;
 import ar.lamansys.messages.infrastructure.output.entity.Cart;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -21,6 +22,10 @@ public interface CartRepository extends JpaRepository<Cart, Integer> {
     CartStoredBo getCartExists(@Param("userId") String userId, @Param("sellerId") String idSeller);
 
     Optional<Cart> findByIdAndAppUserId(Integer id, String appUserId);
+    @Modifying
+    @Query("UPDATE Cart c SET c.totalPrice=:newTotalPrice WHERE c.id=:cartId")
+    void updateTotalPrice(@Param("cartId")Integer cartId, @Param("newTotalPrice") Integer newTotalPrice);
+
 
 
 
