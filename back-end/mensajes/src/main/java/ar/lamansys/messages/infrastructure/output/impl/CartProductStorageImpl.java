@@ -21,8 +21,8 @@ public class CartProductStorageImpl implements CartProductStorage {
         cartProductRepository.save(new CartProduct(new CartProductId(newCartProductBo.getCartId(),newCartProductBo.getProductId()),newCartProductBo.getQuantity(),newCartProductBo.getQuantityPrice()));
     }
     @Override
-    public int updateQuantity(Integer cartId, Integer productId, Integer newQuantity, Integer quantityPrice){
-         return cartProductRepository.updateQuantity(newQuantity,cartId, productId, quantityPrice);
+    public Integer updateQuantity(Integer cartId, Integer productId, Integer newQuantity, Integer quantityPrice){
+         return cartProductRepository.updateQuantity(newQuantity, cartId, productId, quantityPrice);
     }
 
     @Override
@@ -32,6 +32,12 @@ public class CartProductStorageImpl implements CartProductStorage {
     @Override
     public Integer calculateTotalPrice(Integer cartId) {
         return cartProductRepository.calculateTotalPrice(cartId);
+    }
+
+    @Override
+    public Integer addProductToCart(Integer cartId, Integer productId, Integer quantity, Integer quantityPrice) {
+        //o usar save
+        return cartProductRepository.addProductToCart(cartId, productId, quantity, quantityPrice);
     }
 
 }
