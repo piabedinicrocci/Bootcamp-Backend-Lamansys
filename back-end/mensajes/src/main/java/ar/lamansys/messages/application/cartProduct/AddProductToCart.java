@@ -41,15 +41,14 @@ public class AddProductToCart {
         //calculo el quantityPrice
         Integer quantityPrice= quantity * productStorage.getUnitPrice(productId);
 
-        //agrego el producto al carrito
-        cartProductStorage.addProductToCart(cartId,productId, quantity, quantityPrice);
-
         //calculo el nuevo total price
         Integer newTotalPrice= cartProductStorage.calculateTotalPrice(cartId);
 
+        //agrego el producto al carrito
+        cartProductStorage.addProductToCart(cartId,productId, quantity, quantityPrice);
+
         // actualizar el precio total en carrito
         cartStorage.updateTotalPrice(cartId, newTotalPrice);
-
     }
 
 }
