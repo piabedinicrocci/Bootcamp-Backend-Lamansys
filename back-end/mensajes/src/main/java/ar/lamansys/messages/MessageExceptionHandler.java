@@ -69,5 +69,13 @@ public class MessageExceptionHandler {
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(ProductInCartException.class)
+    public ResponseEntity<Map<String, String>> productInCartHandler(ProductInCartException ex) {
+        Map<String, String> errorResponse = new HashMap<>();
+        errorResponse.put("code", "PRODUCT_IN_CART_EXISTS");
+        errorResponse.put("message", ex.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+    }
+
 
 }

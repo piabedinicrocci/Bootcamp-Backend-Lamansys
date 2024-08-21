@@ -23,7 +23,7 @@ public class AddProductToCart {
     private final AssertUserExists assertUserExists;
     private final AssertProductExists assertProductExists;
     private final AssertCartUserExist assertCartUserExist;
-    private final AssertProductInCartExist assertProductInCartExist;
+    private final AssertProductNotInCartExist assertProductNotInCartExist;
     private final AssertStockAvailable assertStockAvailable;
 
     public void run(Integer cartId, Integer productId, String userId, Integer quantity) throws CartUserNotExistsException, ProductNotInCartException, StockNotAvailableException, UserNotExistsException, ProductNotExistsException {
@@ -34,7 +34,7 @@ public class AddProductToCart {
         //chequear que el carrito exista y pertenezca al usuario
         assertCartUserExist.run(cartId, userId);
         //chequear que el producto este en el carrito
-        // assertProductInCartExist.run(cartId, productId);
+        assertProductNotInCartExist.run(cartId, productId);
         //verificar que la cantidad no supere el stock disponible
         assertStockAvailable.run(productId, quantity);
 
