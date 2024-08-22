@@ -11,7 +11,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
-import ar.lamansys.messages.MessageApp;
+import ar.lamansys.messages.ECommerceApp;
 import ar.lamansys.messages.application.user.port.UserSessionStorage;
 
 @ExtendWith(SpringExtension.class)
@@ -25,7 +25,7 @@ class HealthCheckControllerWebTest {
     private UserSessionStorage sessionStorage;
 
     @MockBean
-    private MessageApp messageApp;
+    private ECommerceApp ECommerceApp;
 
     @Autowired
     private MockMvc mockMvc;

@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @ControllerAdvice
-public class MessageExceptionHandler {
+public class GlobalExceptionHandler {
 
     @ExceptionHandler({UserNotExistsException.class, UserSessionNotExists.class, ProductNotExistsException.class})
     public ResponseEntity<Map<String, String>> notExistsHandler(Exception ex) {
