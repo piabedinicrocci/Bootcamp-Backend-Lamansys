@@ -1,6 +1,5 @@
-package ar.lamansys.messages.application.Cart;
+package ar.lamansys.messages.application.cart;
 
-import ar.lamansys.messages.application.cart.AssertCartUserExist;
 import ar.lamansys.messages.application.cart.port.CartStorage;
 import ar.lamansys.messages.application.exception.CartUserNotExistsException;
 import ar.lamansys.messages.domain.cart.CartStoredBo;
