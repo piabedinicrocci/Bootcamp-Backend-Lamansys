@@ -1,12 +1,15 @@
 package ar.lamansys.messages.infrastructure.output.impl;
 
 import ar.lamansys.messages.application.cartProduct.port.CartProductStorage;
+import ar.lamansys.messages.domain.cart.ProductShowCartBo;
 import ar.lamansys.messages.domain.cartProduct.CartProductBo;
 import ar.lamansys.messages.infrastructure.output.entity.CartProduct;
 import ar.lamansys.messages.infrastructure.output.entity.CartProductId;
 import ar.lamansys.messages.infrastructure.output.repository.CartProductRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.stream.Stream;
 
 @AllArgsConstructor
 @Service
@@ -45,6 +48,11 @@ public class CartProductStorageImpl implements CartProductStorage {
     @Override
     public long  countByCartId(Integer cartId){
         return cartProductRepository.countByCartId(cartId);
+    }
+
+    @Override
+    public Stream<ProductShowCartBo> findAllByCartId(Integer cartId) {
+        return cartProductRepository.findAllByCartId(cartId);
     }
 
 }

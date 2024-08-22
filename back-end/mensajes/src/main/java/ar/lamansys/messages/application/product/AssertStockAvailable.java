@@ -6,14 +6,18 @@ import ar.lamansys.messages.application.product.port.ProductStorage;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import static java.lang.Math.abs;
+
 @AllArgsConstructor
 @Service
 public class AssertStockAvailable {
     private ProductStorage productStorage;
 
     public void run(Integer productId, Integer quantity) throws StockNotAvailableException {
-        if ( productStorage.getStock(productId) < quantity) {
-            throw new StockNotAvailableException(productId,quantity);
+        Integer stock = productStorage.getStock(productId);
+        if ( stock < quantity) {
+            Integer missing= abs(stock-quantity);
+            throw new StockNotAvailableException(productId,quantity,missing);
         }
     }
 }

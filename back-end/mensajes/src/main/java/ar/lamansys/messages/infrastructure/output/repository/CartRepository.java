@@ -26,7 +26,6 @@ public interface CartRepository extends JpaRepository<Cart, Integer> {
     @Query("UPDATE Cart c SET c.totalPrice=:newTotalPrice WHERE c.id=:cartId")
     void updateTotalPrice(@Param("cartId")Integer cartId, @Param("newTotalPrice") Integer newTotalPrice);
 
-
-
-
+    @Query("SELECT c.totalPrice FROM Cart c WHERE c.id = :cartId")
+    Integer getTotalPrice(@Param("cartId")Integer cartId);
 }

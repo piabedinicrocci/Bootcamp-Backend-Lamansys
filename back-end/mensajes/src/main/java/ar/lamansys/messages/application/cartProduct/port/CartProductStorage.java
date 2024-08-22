@@ -1,6 +1,9 @@
 package ar.lamansys.messages.application.cartProduct.port;
 
+import ar.lamansys.messages.domain.cart.ProductShowCartBo;
 import ar.lamansys.messages.domain.cartProduct.CartProductBo;
+
+import java.util.stream.Stream;
 
 
 public interface CartProductStorage {
@@ -11,4 +14,5 @@ public interface CartProductStorage {
     Integer addProductToCart(Integer cartId, Integer productId, Integer quantity, Integer quantityPrice);
     CartProductBo deleteProductFromCart(Integer cartId, Integer productId);
     long  countByCartId(Integer cartId);
+    Stream<ProductShowCartBo> findAllByCartId(Integer cartId);
 }

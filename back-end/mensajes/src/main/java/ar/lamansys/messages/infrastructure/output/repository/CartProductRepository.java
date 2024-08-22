@@ -1,5 +1,6 @@
 package ar.lamansys.messages.infrastructure.output.repository;
 
+import ar.lamansys.messages.domain.cart.ProductShowCartBo;
 import ar.lamansys.messages.domain.cartProduct.CartProductBo;
 import ar.lamansys.messages.infrastructure.output.entity.CartProduct;
 import ar.lamansys.messages.infrastructure.output.entity.CartProductId;
@@ -14,8 +15,12 @@ import java.util.stream.Stream;
 @Repository
 public interface CartProductRepository extends JpaRepository<CartProduct, CartProductId> {
 
-    @Query("SELECT cp FROM CartProduct cp WHERE cp.id.cartId = :cartId")
-    Stream<CartProduct> findAllByCartId(@Param("cartId") Integer cartId);
+    @Query("SELECT NEW ar.lamansys.messages.domain.cart.ProductShowCartBo(p.id, p.name, p.unitPrice, cp.quantity, cp.quantityPrice) " +
+            "FROM CartProduct cp " +
+            "JOIN Product p ON cp.id.productId = p.id " +
+            "WHERE cp.id.cartId = :cartId")
+    Stream<ProductShowCartBo> findAllByCartId(@Param("cartId") Integer cartId);
+
 
     @Modifying
     @Query("UPDATE CartProduct cp SET cp.quantity = :quantity, cp.quantityPrice = :quantityPrice WHERE cp.id.cartId = :cartId AND cp.id.productId = :productId")

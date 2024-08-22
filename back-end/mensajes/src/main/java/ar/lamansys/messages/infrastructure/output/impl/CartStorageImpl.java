@@ -42,4 +42,9 @@ public class CartStorageImpl implements CartStorage {
         cartRepository.deleteById(cartId);
     }
 
+    @Override
+    public Integer getTotalPrice(Integer cartId) {
+        return cartRepository.getTotalPrice(cartId);
+    }
+
 }
