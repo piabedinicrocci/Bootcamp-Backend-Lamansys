@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -65,7 +66,7 @@ public class CartControllerTest {
         CartRequestDTO cartDTO = new CartRequestDTO(20, 3);
         CartResponseDTO responseDTO = new CartResponseDTO(2, userId, 2000, false, "user3");
 
-        when(createCart.run((userId), any())).thenReturn(new CartStoredBo(2, userId, 2000, false, "user3"));
+        when(createCart.run(eq(userId), any())).thenReturn(new CartStoredBo(2, userId, 2000, false, "user3"));
         when(cartMapper.cartStoredBoToCartResponseDTO(any())).thenReturn(responseDTO);
 
         // Act & Assert
@@ -73,7 +74,7 @@ public class CartControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{ \"quantity\": 20, \"productId\": 3 }"))
                 .andExpect(status().isCreated())
-                .andExpect(content().json("{ \"cartId\": 2, \"appUserId\": \"user123\", \"totalPrice\": 2000, \"isFinalized\": false, \"sellerId\": \"user3\" }"));
+                .andExpect(content().json("{ \"id\": 2, \"appUserId\": \"user123\", \"totalPrice\": 2000, \"isFinalized\": false, \"sellerId\": \"user3\" }"));
     }
 
     @Test
