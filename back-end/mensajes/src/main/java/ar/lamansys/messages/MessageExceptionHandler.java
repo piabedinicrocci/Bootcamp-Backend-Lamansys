@@ -33,7 +33,7 @@ public class MessageExceptionHandler {
         Map<String, String> errorResponse = new HashMap<>();
         errorResponse.put("code", "CART_MISMATCH");
         errorResponse.put("message", ex.getMessage());
-        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(errorResponse, HttpStatus.FORBIDDEN);
     }
 
     @ExceptionHandler(OpenCartException.class)
@@ -48,7 +48,7 @@ public class MessageExceptionHandler {
         Map<String, String> errorResponse = new HashMap<>();
         errorResponse.put("code", "INSUFFICIENT_STOCK");
         errorResponse.put("message", ex.getMessage());
-        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(errorResponse, HttpStatus.UNPROCESSABLE_ENTITY);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -75,6 +75,27 @@ public class MessageExceptionHandler {
         errorResponse.put("code", "PRODUCT_IN_CART_EXISTS");
         errorResponse.put("message", ex.getMessage());
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+    }
+    @ExceptionHandler(ProductFromDiferentSellerException.class)
+    public ResponseEntity<Map<String, String>> productFromDiferentSellerHandler(ProductFromDiferentSellerException ex) {
+        Map<String, String> errorResponse = new HashMap<>();
+        errorResponse.put("code", "PRODUCT_FROM_DIFFERENT_SELLER");
+        errorResponse.put("message", ex.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
+    }
+    @ExceptionHandler(CartIsFinalizedException.class)
+    public ResponseEntity<Map<String, String>> cartIsFinalizedHandler(CartIsFinalizedException ex) {
+        Map<String, String> errorResponse = new HashMap<>();
+        errorResponse.put("code", "CART_IS_FINALIZED");
+        errorResponse.put("message", ex.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
+    }
+    @ExceptionHandler(ProductPriceChangedException.class)
+    public ResponseEntity<Map<String, String>> productPriceChangedHandler(ProductPriceChangedException ex) {
+        Map<String, String> errorResponse = new HashMap<>();
+        errorResponse.put("code", "OUTDATED_CART_PRICE");
+        errorResponse.put("message", ex.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatus.UNPROCESSABLE_ENTITY);
     }
 
 

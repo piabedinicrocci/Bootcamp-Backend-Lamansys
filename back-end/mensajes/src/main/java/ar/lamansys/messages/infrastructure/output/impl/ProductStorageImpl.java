@@ -39,4 +39,14 @@ public class ProductStorageImpl implements ProductStorage {
         return repository.getUnitPrice(productId);
     }
 
+    @Override
+    public Integer findPriceByProductId(Integer productId) {
+        return repository.findPriceByProductId(productId);
+    }
+
+    @Override
+    public void updateStock(Integer productId, Integer newStock) {
+        repository.updateStock( productId, newStock);
+    }
+
 }

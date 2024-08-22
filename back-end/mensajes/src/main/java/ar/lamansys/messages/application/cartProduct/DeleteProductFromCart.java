@@ -1,5 +1,6 @@
 package ar.lamansys.messages.application.cartProduct;
 
+import ar.lamansys.messages.application.cart.AssertCartIsNotFinalized;
 import ar.lamansys.messages.application.cart.AssertCartUserExist;
 import ar.lamansys.messages.application.cart.port.CartStorage;
 import ar.lamansys.messages.application.cartProduct.port.CartProductStorage;
@@ -22,12 +23,15 @@ public class DeleteProductFromCart {
     private final AssertCartUserExist assertCartUserExist;
     private final AssertProductInCartExist assertProductInCartExist;
     private final AssertUserExists assertUserExists;
+    private final AssertCartIsNotFinalized assertCartIsNotFinalized;
 
     public CartProductBo run (Integer cartId, Integer productId, String appUserId) throws CartUserNotExistsException, ProductNotInCartException, UserNotExistsException {
         //verificar que el usuario exista
         assertUserExists.run(appUserId);
         //verificar que exista el carrito con el usuario
         assertCartUserExist.run(cartId, appUserId);
+        //verificar que el carrito no este siendo procesado
+        assertCartIsNotFinalized.run(cartId);
         //verificar que este el producto a borrar en el carrito
         assertProductInCartExist.run(cartId,productId);
         //cantidad de productos del carrito

@@ -1,6 +1,5 @@
 package ar.lamansys.messages.application.product;
 
-import ar.lamansys.messages.application.exception.ProductNotExistsException;
 import ar.lamansys.messages.application.exception.StockNotAvailableException;
 import ar.lamansys.messages.application.product.port.ProductStorage;
 import lombok.AllArgsConstructor;

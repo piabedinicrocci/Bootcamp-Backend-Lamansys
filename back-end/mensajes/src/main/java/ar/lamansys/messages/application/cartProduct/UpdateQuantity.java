@@ -1,5 +1,6 @@
 package ar.lamansys.messages.application.cartProduct;
 
+import ar.lamansys.messages.application.cart.AssertCartIsNotFinalized;
 import ar.lamansys.messages.application.cart.AssertCartUserExist;
 import ar.lamansys.messages.application.cart.port.CartStorage;
 import ar.lamansys.messages.application.cartProduct.port.CartProductStorage;
@@ -23,11 +24,15 @@ public class UpdateQuantity {
     private final AssertProductInCartExist assertProductInCartExist;
     private final AssertStockAvailable assertStockAvailable;
     private final CartStorage cartStorage;
+    private final AssertCartIsNotFinalized assertCartIsNotFinalized;
 
     public void run(Integer cartId, String appUserId, Integer productId, Integer newQuantity) throws CartUserNotExistsException, ProductNotInCartException, StockNotAvailableException {
 
         //chequear que el carrito exista y pertenezca al usuario
         assertCartUserExist.run(cartId, appUserId);
+
+        //chequear que el carrito no este siendo procesado
+        assertCartIsNotFinalized.run(cartId);
 
         //chequear que el producto este en el carrito
         assertProductInCartExist.run(cartId, productId);

@@ -3,6 +3,7 @@ package ar.lamansys.messages.infrastructure.output.repository;
 import ar.lamansys.messages.domain.product.ProductStoredBo;
 import ar.lamansys.messages.infrastructure.output.entity.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -38,5 +39,15 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
             "WHERE p.id = :productId")
     Integer getUnitPrice(@Param("productId") Integer productId);
 
+    @Query("SELECT p.unitPrice " +
+            "FROM Product p" +
+            " WHERE p.id=:productId")
+    Integer findPriceByProductId(@Param("productId")Integer productId);
+
+    @Modifying
+    @Query("UPDATE Product p" +
+            " SET p.stock=:newStock" +
+            " WHERE p.id=:productId")
+    void updateStock(@Param("productId")Integer productId, @Param("newStock")Integer newStock);
 }
 

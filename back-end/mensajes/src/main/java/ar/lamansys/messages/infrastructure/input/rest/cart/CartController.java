@@ -1,5 +1,6 @@
 package ar.lamansys.messages.infrastructure.input.rest.cart;
 
+import ar.lamansys.messages.application.cart.FinalizeCart;
 import ar.lamansys.messages.application.cart.GetCartState;
 import ar.lamansys.messages.application.exception.OpenCartException;
 import ar.lamansys.messages.application.exception.StockNotAvailableException;
@@ -29,6 +30,7 @@ public class CartController {
     private final ListProducts listProducts;
     private final GetCartState getCartState;
     private final CartProductMapper cartProductMapper;
+    private final FinalizeCart finalizeCart;
 
     @PostMapping("/{userId}")
     public ResponseEntity<CartResponseDTO> createCart(@PathVariable String userId, @ Valid @RequestBody CartRequestDTO cartDTO)
@@ -42,6 +44,12 @@ public class CartController {
         CartSummaryBo bo= getCartState.run(cartId,userId);
         CartSummaryDTO response = cartProductMapper.cartSummaryBoToCartSummaryDTO(bo);
         return ResponseEntity.status(200).body(response);
+    }
+
+    @PutMapping("/{cartId}/user/{userId}/checkout")
+    public ResponseEntity<String> finalizeCart(@PathVariable Integer cartId, @PathVariable String userId) throws UserNotExistsException {
+        finalizeCart.run(cartId, userId);
+        return ResponseEntity.ok("Cart successfully closed");
     }
 
 }

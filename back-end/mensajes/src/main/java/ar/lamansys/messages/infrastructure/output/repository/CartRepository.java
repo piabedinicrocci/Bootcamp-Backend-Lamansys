@@ -28,4 +28,15 @@ public interface CartRepository extends JpaRepository<Cart, Integer> {
 
     @Query("SELECT c.totalPrice FROM Cart c WHERE c.id = :cartId")
     Integer getTotalPrice(@Param("cartId")Integer cartId);
+
+    @Query("SELECT c.sellerId " +
+            "FROM Cart c " +
+            "WHERE c.id=:cartId")
+    String getSellerById(@Param("cartId") Integer cartId);
+
+    @Query("SELECT c.isFinalized FROM Cart c WHERE c.id=:cartId")
+    boolean getIsFinalizedById(@Param("cartId") Integer cartId);
+    @Modifying
+    @Query("UPDATE Cart c SET c.isFinalized=true")
+    void updateIsFinalized(Integer cartId);
 }

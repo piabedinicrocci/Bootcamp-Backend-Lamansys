@@ -1,13 +1,10 @@
 package ar.lamansys.messages.infrastructure.mapper;
 
 import ar.lamansys.messages.domain.cart.CartSummaryBo;
-import ar.lamansys.messages.domain.cart.ProductFromCartBo;
 import ar.lamansys.messages.domain.cart.ProductShowCartBo;
 import ar.lamansys.messages.domain.cartProduct.CartProductBo;
-import ar.lamansys.messages.domain.product.ProductStoredBo;
 import ar.lamansys.messages.infrastructure.DTO.CartProductResponseDTO;
 import ar.lamansys.messages.infrastructure.DTO.CartSummaryDTO;
-import ar.lamansys.messages.infrastructure.DTO.ProductResponseDTO;
 import ar.lamansys.messages.infrastructure.DTO.ProductShowCartDTO;
 import org.springframework.stereotype.Component;
 

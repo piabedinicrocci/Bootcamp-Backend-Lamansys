@@ -18,13 +18,13 @@ public class CartStorageImpl implements CartStorage {
 
     @Override
     public CartStoredBo createCart(String appUserId, Integer totalPrice, Boolean isFinalized, String sellerId) {
-        Cart cart = cartRepository.save(new Cart(appUserId,totalPrice,isFinalized,sellerId));
+        Cart cart = cartRepository.save(new Cart(appUserId, totalPrice, isFinalized, sellerId));
         return cartMapper.entityToCartStoredBo(cart);
     }
 
     @Override
     public CartStoredBo getCartExists(String userId, String idSeller) {
-        return cartRepository.getCartExists(userId,idSeller);
+        return cartRepository.getCartExists(userId, idSeller);
     }
 
     @Override
@@ -35,16 +35,31 @@ public class CartStorageImpl implements CartStorage {
 
     @Override
     public void updateTotalPrice(Integer cartId, Integer newTotalPrice) {
-         cartRepository.updateTotalPrice(cartId, newTotalPrice);
+        cartRepository.updateTotalPrice(cartId, newTotalPrice);
     }
+
     @Override
-    public void deleteCartById(Integer cartId){
+    public void deleteCartById(Integer cartId) {
         cartRepository.deleteById(cartId);
     }
 
     @Override
+
     public Integer getTotalPrice(Integer cartId) {
         return cartRepository.getTotalPrice(cartId);
+    }
+    @Override
+    public String getSellerById(Integer cartId){
+        return cartRepository.getSellerById(cartId);
+    }
+    @Override
+    public boolean getIsFinalizedById (Integer cartId){
+        return cartRepository.getIsFinalizedById(cartId);
+    }
+
+    @Override
+    public void updateIsFinalized(Integer cartId) {
+        cartRepository.updateIsFinalized(cartId);
     }
 
 }
