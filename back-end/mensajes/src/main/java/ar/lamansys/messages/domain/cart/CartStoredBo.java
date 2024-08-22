@@ -1,6 +1,7 @@
 package ar.lamansys.messages.domain.cart;
 
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.Value;
 
 @AllArgsConstructor
