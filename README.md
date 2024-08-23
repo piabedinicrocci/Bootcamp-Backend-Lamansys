@@ -1,82 +1,158 @@
-# Herramientas
+# API Carrito de Compras
 
-## Git
+API para gestionar productos, carritos y compras.
 
-En Windows usamos [git bash](https://git-scm.com/downloads).
+**Autores:**
+- Bedini Pia: pbedini@alumnos.exa.unicen.edu.ar
+- Fernandez Florencia: florenciafernandez0301@gmail.com
 
-En Linux se puede hacer `sudo apt-get install git`.
+## Swagger
+Se puede acceder a la documentación completa de la API a través de Swagger, donde encontrarás todos los endpoints disponibles, ejemplos de solicitudes y respuestas, así como descripciones detalladas de cada uno.  
+`http://localhost:8080/api/swagger-ui/index.html`
 
-En MacOs se puede hacer `brew install git`.
+## Endpoints
+
+### Obtener productos de un usuario
+
+**Descripción:**
+La API `/api/products/{userId}` permite obtener una lista de productos específicos de un `userId`.
+
+**Método HTTP:** `GET`
+
+**Parámetros de la Ruta:**
+- `userId`: Identificador único del usuario.
+
+**Respuestas:**
+- `200 OK`: La solicitud fue exitosa, y la respuesta contiene los datos del género correspondiente.
+- `404 Not Found`: El usuario especificado no existe.
+
+---
+
+### Crear un Carrito de compras
+
+**Descripción:**
+La API `/api/cart/{userId}` permite crear un nuevo carrito entre userId y sellerId (obtenido desde el producto especificado en el cuerpo de la solicitud).
+
+**Método HTTP:** `POST`
+
+**Parámetros de la Ruta:**
+- `userId`: Identificador único del usuario.
+
+**Cuerpo:**
+- `productId`
+- `quantity`
+
+**Respuestas:**
+- `201 Created`: La solicitud de creación fue exitosa, y la respuesta contiene los detalles del nuevo carrito.
+- `400 Bad Request`: Ya existe un carrito abierto entre el usuario y el vendedor de ese producto o cantidad solicitada excede el stock disponible.
+- `404 Not Found`: El usuario o el producto especificado no existe.
+
+---
+
+### Agregar un producto a un Carrito de compras
+
+**Descripción:**
+La API `/api/cart/{cartId}/product/{productId}` permite agregar el producto obtenido del cuerpo de la solicitud con `productId` al carrito con `cartId`.
+
+**Método HTTP:** `POST`
+
+**Parámetros de la Ruta:**
+- `cartId`: Identificador único del carrito.
+- `productId`: Identificador único del producto.
+
+**Cuerpo:**
+- `userId`
+- `quantity`
+
+**Respuestas:**
+- `201 Created`: La solicitud de creación fue exitosa, y la respuesta contiene los detalles del nuevo carrito.
+- `400 Bad Request`: La cantidad de productos debe ser mayor a cero.
+- `403`: El carrito no pertence al usuario.
+- `404 Not Found`: El producto o el carrito especificado no existe.
+- `409`: Cantidad solicitada excede el stock disponible.
+
+---
+
+### Actualizar cantidad de un producto en un Carrito de compras
+
+**Descripción:**
+La API `/api/cart/{cartId}/product/{productId}` posibilita la actualización de la cantidad de un producto mediante su `productId` en un determinado carrito `cartId`. Se debe proporcionar la cantidad en el cuerpo de la solicitud.
+
+**Método HTTP:** `PUT`
+
+**Parámetros de la Ruta:**
+- `cartId`: Identificador único del carrito.
+- `productId`: Identificador único del producto.
+
+**Cuerpo:**
+- `quantity`
+
+**Respuestas:**
+- `200 OK`: La solicitud de actualización fue exitosa, y la respuesta contiene los detalles del nuevo carrito.
+- `400 Bad Request`: La cantidad de productos debe ser mayor a cero.
+- `403`: El carrito no pertence al usuario.
+- `404 Not Found`: El producto o el carrito especificado no existe.
+- `409`: Cantidad solicitada excede el stock disponible.
+
+---
+
+### Eliminar un producto de un Carrito de compras
+
+**Descripción:**
+La API `/api/cart/{cartId}/product/{productId}` permite la eliminación del producto con `productId` en el carrito `cartId`.
+
+**Método HTTP:** `DELETE`
+
+**Parámetros de la Ruta:**
+- `cartId`: Identificador único del carrito.
+- `productId`: Identificador único del producto.
+
+**Respuestas:**
+- `200 OK`: La solicitud de eliminación fue exitosa, y la respuesta contiene los detalles del nuevo carrito.
+- `403`: El carrito no pertence al usuario.
+- `404 Not Found`: El producto o el carrito especificado no existe.
+
+---
+
+### Obtener un Carrito de Compras
+
+**Descripción:**
+La API `/api/cart/{cartId}/user/{userId}` permite obtener el carrito con `cartId` del usuario `userId`, sus productos y el precio total del mismo.
+
+**Método HTTP:** `GET`
+
+**Parámetros de la Ruta:**
+- `cartId`: Identificador único del carrito.
+- `userId`: Identificador único del usuario.
+
+**Respuestas:**
+- `200 OK`: La solicitud fue exitosa, y la respuesta contiene la lista de todos los productos del carrito.
+- `403`: El carrito no pertence al usuario.
+- `404 Not Found`: El carrito especificado no existe.
+
+---
+
+### Finalizar compra
+
+**Descripción:**
+La API `/api/cart/{cartId}/user/{userId}/checkout` permite finalizar la compra del carrito `cartId` del usuario `userId`.
+
+**Método HTTP:** `PUT`
+
+**Parámetros de la Ruta:**
+- `cartId`: Identificador único del carrito.
+- `userId`: Identificador único del usuario.
+
+**Respuestas:**
+- `200 OK`: La solicitud fue exitosa, y la respuesta contiene la lista de todos los productos del carrito.
+- `403`: El carrito no pertence al usuario.
+- `404 Not Found`: El carrito especificado no existe.
+- `422`: Estado del carrito desactualizado con respecto al precio por unidad o stock insuficiente para completar la compra.
+- `404 Not Found`: El carrito especificado no existe.
+
+---
 
 
-## Docker
-
-Se puede descargar desde [la web de docker](https://www.docker.com/products/docker-desktop/).
-
-### Compilar y Testear con Docker
-
-Estos comandos deberían funcionar siempre y a todos los desarrolladores:
-
-`docker run -itv ${PWD}:/usr/src/app -w /usr/src/app maven:3.8.6-openjdk-11 ./back-end/build.sh`
-
-`docker run -itv ${PWD}:/usr/src/app -w /usr/src/app maven:3.8.6-openjdk-11 ./back-end/run-tests.sh`
 
 
-## Cliente Postgres
-
-Se puede usar el que tengan, sugerimos [DBeaver](https://dbeaver.io/download/) o [DbVisualizer](https://www.dbvis.com/download/).
-
-Otra alternativa es [Datagrip](https://www.jetbrains.com/datagrip/download/).
-
-## Postman
-
-Descargar desde [la web de postman](https://www.postman.com/downloads/).
-
-### Probar endpoint publico con curl
-
-curl 'https://echo.free.beeceptor.com'
-
-
-## Java / Maven
-
-> No instalar una versión mas nueva si ya tienen una
-
-En Windows [descargar Java JDK](https://www.oracle.com/java/technologies/downloads/?er=221886) y [Descargar Maven](https://maven.apache.org/download.cgi).
-
-En Linux `sudo apt install openjdk-11-jdk` y `sudo apt install maven`.
-
-En MacOs `brew install openjdk` y `brew install maven`.
-
-Verificar versión:
-
-1. Java `java -version` >> 11
-2. Java compiler `javac -version` >> javac 11
-3. Maven `mvn -version` >> Apache Maven 3.8.6
-4. Generar jar `mvn clean package`
-5. Ejecutar jar `java -jar target/mensajes-1.0-SNAPSHOT.jar`
-
-## IntelliJ IDEA Community Edition
-
-1. Descargar desde [la web de jetbrains](https://www.jetbrains.com/idea/download/)
-2. Ejecutar `Run` sobre la clase principal.
-3. Agregar `-Dspring.profiles.active=dev` en el campo **"VM Options"** del Run Configuration.
-
-
-### Compilar y Testear localmente
-
-Estos comandos deberían funcionar siempre y a todos los desarrolladores:
-
-`./back-end/build.sh`
-
-`./back-end/run-tests.sh`
-
-### Iniciar localmente con docker
-
-Iniciar postgres
-
-`docker compose up bootcamp-db`
-
-Iniciar backend
-
-`docker compose up --build bootcamp-backend`
 
