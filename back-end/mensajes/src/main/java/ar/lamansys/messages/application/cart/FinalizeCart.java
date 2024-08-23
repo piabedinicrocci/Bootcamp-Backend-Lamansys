@@ -2,20 +2,20 @@ package ar.lamansys.messages.application.cart;
 
 import ar.lamansys.messages.application.cart.port.CartStorage;
 import ar.lamansys.messages.application.cartProduct.port.CartProductStorage;
+import ar.lamansys.messages.application.exception.CartIsFinalizedException;
 import ar.lamansys.messages.application.exception.CartUserNotExistsException;
 import ar.lamansys.messages.application.exception.ProductPriceChangedException;
 import ar.lamansys.messages.application.exception.StockNotAvailableException;
 import ar.lamansys.messages.application.product.AssertStockAvailable;
 import ar.lamansys.messages.application.product.port.ProductStorage;
 import ar.lamansys.messages.domain.cart.ProductShowCartBo;
-import ar.lamansys.messages.domain.cartProduct.CartProductBo;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
+
 
 @AllArgsConstructor
 @Transactional
@@ -26,10 +26,11 @@ public class FinalizeCart {
     private final CartProductStorage cartProductStorage;
     private final AssertCartUserExist assertCartUserExist;
     private final AssertStockAvailable assertStockAvailable;
-    private final GetCartState getCartState;
+    private final AssertCartIsNotFinalized assertCartIsNotFinalized;
 
-    public void run(Integer cartId, String appUserId) throws CartUserNotExistsException, StockNotAvailableException {
+    public void run(Integer cartId, String appUserId) throws CartUserNotExistsException, StockNotAvailableException, CartIsFinalizedException {
         assertCartUserExist.run(cartId, appUserId);
+        assertCartIsNotFinalized.run(cartId);
 
         // Obtén los productos del carrito
         List<ProductShowCartBo> products = cartProductStorage.findAllByCartId(cartId).collect(Collectors.toList());
