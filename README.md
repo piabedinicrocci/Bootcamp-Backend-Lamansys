@@ -31,11 +31,11 @@ La API `/api/products/{userId}` permite obtener una lista de productos específi
 ### Crear un Carrito de compras
 
 **Descripción:**
-La API `/api/cart/{userId}` permite crear un nuevo carrito entre userId y sellerId (obtenido desde el producto especificado en el cuerpo de la solicitud).
+La API `/api/cart` permite crear un nuevo carrito entre userId y sellerId (obtenido desde el producto especificado en el cuerpo de la solicitud).
 
 **Método HTTP:** `POST`
 
-**Parámetros de la Ruta:**
+**Headers de la solicitud:**
 - `userId`: Identificador único del usuario.
 
 **Cuerpo:**
@@ -67,9 +67,9 @@ La API `/api/cart/{cartId}/product/{productId}` permite agregar el producto obte
 **Respuestas:**
 - `201 Created`: La solicitud de creación fue exitosa, y la respuesta contiene los detalles del nuevo carrito.
 - `400 Bad Request`: La cantidad de productos debe ser mayor a cero.
-- `403`: El carrito no pertence al usuario.
+- `403 Forbidden`: El carrito no pertence al usuario.
 - `404 Not Found`: El producto o el carrito especificado no existe.
-- `409`: Cantidad solicitada excede el stock disponible.
+- `409 Conflict`: Cantidad solicitada excede el stock disponible.
 
 ---
 
@@ -84,15 +84,18 @@ La API `/api/cart/{cartId}/product/{productId}` posibilita la actualización de 
 - `cartId`: Identificador único del carrito.
 - `productId`: Identificador único del producto.
 
+**Headers de la solicitud:**
+- `userId`: Identificador único del usuario.
+
 **Cuerpo:**
 - `quantity`
 
 **Respuestas:**
 - `200 OK`: La solicitud de actualización fue exitosa, y la respuesta contiene los detalles del nuevo carrito.
 - `400 Bad Request`: La cantidad de productos debe ser mayor a cero.
-- `403`: El carrito no pertence al usuario.
+- `403 Forbidden`: El carrito no pertence al usuario.
 - `404 Not Found`: El producto o el carrito especificado no existe.
-- `409`: Cantidad solicitada excede el stock disponible.
+- `409 Conflict`: Cantidad solicitada excede el stock disponible.
 
 ---
 
@@ -107,9 +110,12 @@ La API `/api/cart/{cartId}/product/{productId}` permite la eliminación del prod
 - `cartId`: Identificador único del carrito.
 - `productId`: Identificador único del producto.
 
+**Headers de la solicitud:**
+- `userId`: Identificador único del usuario.
+
 **Respuestas:**
-- `200 OK`: La solicitud de eliminación fue exitosa, y la respuesta contiene los detalles del nuevo carrito.
-- `403`: El carrito no pertence al usuario.
+- `200 OK`: La solicitud de eliminación fue exitosa,  y la respuesta contiene los detalles del nuevo carrito.
+- `403 Forbidden`: El carrito no pertence al usuario.
 - `404 Not Found`: El producto o el carrito especificado no existe.
 
 ---
@@ -117,17 +123,19 @@ La API `/api/cart/{cartId}/product/{productId}` permite la eliminación del prod
 ### Obtener un Carrito de Compras
 
 **Descripción:**
-La API `/api/cart/{cartId}/user/{userId}` permite obtener el carrito con `cartId` del usuario `userId`, sus productos y el precio total del mismo.
+La API `/api/cart/{cartId}` permite obtener el carrito con `cartId` del usuario `userId`, sus productos y el precio total del mismo.
 
 **Método HTTP:** `GET`
 
 **Parámetros de la Ruta:**
 - `cartId`: Identificador único del carrito.
+
+**Headers de la solicitud:**
 - `userId`: Identificador único del usuario.
 
 **Respuestas:**
 - `200 OK`: La solicitud fue exitosa, y la respuesta contiene la lista de todos los productos del carrito.
-- `403`: El carrito no pertence al usuario.
+- `403 Forbidden`: El carrito no pertence al usuario.
 - `404 Not Found`: El carrito especificado no existe.
 
 ---
@@ -135,19 +143,21 @@ La API `/api/cart/{cartId}/user/{userId}` permite obtener el carrito con `cartId
 ### Finalizar compra
 
 **Descripción:**
-La API `/api/cart/{cartId}/user/{userId}/checkout` permite finalizar la compra del carrito `cartId` del usuario `userId`.
+La API `/api/cart/{cartId}/checkout` permite finalizar la compra del carrito `cartId` del usuario `userId`.
 
 **Método HTTP:** `PUT`
 
 **Parámetros de la Ruta:**
 - `cartId`: Identificador único del carrito.
+
+**Headers de la solicitud:**
 - `userId`: Identificador único del usuario.
 
 **Respuestas:**
 - `200 OK`: La solicitud fue exitosa, y la respuesta contiene la lista de todos los productos del carrito.
-- `403`: El carrito no pertence al usuario.
+- `403 Forbidden`: El carrito no pertence al usuario.
 - `404 Not Found`: El carrito especificado no existe.
-- `422`: Estado del carrito desactualizado con respecto al precio por unidad o stock insuficiente para completar la compra.
+- `422 Unprocessable Entity`: Estado del carrito desactualizado con respecto al precio por unidad o stock insuficiente para completar la compra.
 - `404 Not Found`: El carrito especificado no existe.
 
 ---

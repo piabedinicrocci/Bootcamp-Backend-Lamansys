@@ -70,7 +70,8 @@ public class CartControllerTest {
         when(cartMapper.cartStoredBoToCartResponseDTO(any())).thenReturn(responseDTO);
 
         // Act & Assert
-        mockMvc.perform(post("/cart/{userId}", userId)
+        mockMvc.perform(post("/cart")
+                        .header("userId", userId)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{ \"quantity\": 20, \"productId\": 3 }"))
                 .andExpect(status().isCreated())
@@ -101,7 +102,8 @@ public class CartControllerTest {
         when(cartProductMapper.cartSummaryBoToCartSummaryDTO(cartSummaryBo)).thenReturn(responseDTO);
 
         // Act & Assert
-        mockMvc.perform(get("/cart/{cartId}/user/{userId}", cartId, userId))
+        mockMvc.perform(get("/cart/{cartId}", cartId)
+                        .header("userId", userId))
                 .andExpect(status().isOk())
                 .andExpect(content().json("{"
                         + "  \"products\": ["
@@ -119,7 +121,8 @@ public class CartControllerTest {
         String userId = "user33";
 
         // Act & Assert
-        mockMvc.perform(put("/cart/{cartId}/user/{userId}/checkout", cartId, userId))
+        mockMvc.perform(put("/cart/{cartId}/checkout", cartId)
+                        .header("userId", userId))
                 .andExpect(status().isOk())
                 .andExpect(content().string("Cart successfully closed"));
     }

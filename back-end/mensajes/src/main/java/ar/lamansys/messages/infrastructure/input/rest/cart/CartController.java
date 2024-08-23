@@ -12,6 +12,7 @@ import ar.lamansys.messages.infrastructure.mapper.CartProductMapper;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -39,7 +40,7 @@ public class CartController {
     private final CartProductMapper cartProductMapper;
     private final FinalizeCart finalizeCart;
 
-    @PostMapping("/{userId}")
+    @PostMapping("")
     @Operation(summary = "Crear un carrito",
             description = "Este endpoint se utiliza para crear un carrito de compra con productos especificados para un usuario."
     )
@@ -49,13 +50,13 @@ public class CartController {
             @ApiResponse(responseCode = "404", description = "Usuario o producto no encontrado"),
             @ApiResponse(responseCode = "409", description = "Stock insuficiente")
     })
-    public ResponseEntity<CartResponseDTO> createCart(@Parameter(description = "ID del usuario que abre el carrito")@PathVariable String userId, @ Valid @RequestBody CartRequestDTO cartDTO)
+    public ResponseEntity<CartResponseDTO> createCart(@Parameter(description = "ID del usuario que abre el carrito", in = ParameterIn.HEADER, required = true)@RequestHeader String userId, @ Valid @RequestBody CartRequestDTO cartDTO)
             throws UserNotExistsException, ProductNotExistsException, OpenCartException, StockNotAvailableException {
         CartResponseDTO response = cartMapper.cartStoredBoToCartResponseDTO(createCart.run(userId, cartMapper.toNewCartBo(cartDTO)));
         return ResponseEntity.status(201).body(response);
     }
 
-    @GetMapping("/{cartId}/user/{userId}")
+    @GetMapping("/{cartId}")
     @Operation(summary = "Obtener estado de carrito",
             description = "Este endpoint se utiliza para ver el estado del carrito.")
     @ApiResponses(value = {
@@ -64,13 +65,13 @@ public class CartController {
             @ApiResponse(responseCode = "404", description = "Usuario o producto no encontrado"),
             @ApiResponse(responseCode = "409", description = "Stock insuficiente")
     })
-    public ResponseEntity<CartSummaryDTO> getCartState(@PathVariable Integer cartId, @PathVariable String userId) throws UserNotExistsException {
+    public ResponseEntity<CartSummaryDTO> getCartState(@Parameter(description = "ID del carrito", required = true)@PathVariable Integer cartId, @Parameter(description = "ID del usuario que desea ver el estado de su carrito", in = ParameterIn.HEADER, required = true)@RequestHeader String userId) throws UserNotExistsException {
         CartSummaryBo bo= getCartState.run(cartId,userId);
         CartSummaryDTO response = cartProductMapper.cartSummaryBoToCartSummaryDTO(bo);
         return ResponseEntity.status(200).body(response);
     }
 
-    @PutMapping("/{cartId}/user/{userId}/checkout")
+    @PutMapping("/{cartId}/checkout")
     @Operation(summary = "Finalizar compra",
             description = "Este endpoint se utiliza para finalizar una compra.")
     @ApiResponses(value = {
@@ -80,7 +81,7 @@ public class CartController {
             @ApiResponse(responseCode = "409", description = "Stock insuficiente"),
             @ApiResponse(responseCode = "409", description = "Precio desactualizadp")
     })
-    public ResponseEntity<String> finalizeCart(@PathVariable Integer cartId, @PathVariable String userId) throws UserNotExistsException {
+    public ResponseEntity<String> finalizeCart(@Parameter(description = "ID del carrito a cerrar", required = true) @PathVariable Integer cartId,@Parameter(description = "ID del usuario", in = ParameterIn.HEADER, required = true) @RequestHeader String userId) throws UserNotExistsException {
         finalizeCart.run(cartId, userId);
         return ResponseEntity.ok("Cart successfully closed");
     }

@@ -10,6 +10,7 @@ import ar.lamansys.messages.infrastructure.DTO.QuantityDTO;
 import ar.lamansys.messages.infrastructure.mapper.CartProductMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -29,7 +30,7 @@ public class CartProductController {
     private final DeleteProductFromCart deleteProductFromCart;
     private final CartProductMapper mapper;
 
-    @PutMapping("/{cartId}/product/{productId}/user/{userId}")
+    @PutMapping("/{cartId}/product/{productId}")
     @Operation(summary = "Actualizar cantidad",
             description = "Este endpoint se utiliza para cambiar la cantidad de un producto agregado al carrito.")
     @ApiResponses(value = {
@@ -40,7 +41,7 @@ public class CartProductController {
             @ApiResponse(responseCode = "409", description = "Stock insuficiente"),
 
     })
-    public ResponseEntity<String> updateQuantity(@Parameter(description = "ID del usuario", required = true)@PathVariable String userId, @Parameter(description = "ID del carrito", required = true)@PathVariable Integer cartId,@Parameter(description = "ID del producto", required = true) @PathVariable Integer productId,@Parameter(description = "DTO con la nueva cantidad", required = true) @Valid @RequestBody QuantityDTO quantity){
+    public ResponseEntity<String> updateQuantity(@Parameter(description = "ID del usuario", in = ParameterIn.HEADER, required = true )@RequestHeader String userId, @Parameter(description = "ID del carrito", required = true)@PathVariable Integer cartId, @Parameter(description = "ID del producto", required = true) @PathVariable Integer productId, @Parameter(description = "DTO con la nueva cantidad", required = true) @Valid @RequestBody QuantityDTO quantity){
         updateQuantity.run(cartId, userId, productId, quantity.getQuantity());
         return ResponseEntity.ok("The quantity of the product was succesfully changed");
     }
@@ -62,7 +63,7 @@ public class CartProductController {
         return ResponseEntity.ok("The product was added to the cart");
     }
 
-    @DeleteMapping("/{cartId}/product/{productId}/user/{userId}")
+    @DeleteMapping("/{cartId}/product/{productId}")
     @Operation(summary = "Borrar un producto del carrito",
             description = "Este endpoint se utiliza para sacar un producto del carrito.")
     @ApiResponses(value = {
@@ -73,7 +74,7 @@ public class CartProductController {
             @ApiResponse(responseCode = "409", description = "Stock insuficiente"),
             @ApiResponse(responseCode = "409", description = "Carrito finalizado")
     })
-    public ResponseEntity<CartProductResponseDTO>deleteProductFromCart(@Parameter(description = "ID del carrito", required = true)@PathVariable Integer cartId,@Parameter(description = "ID del producto", required = true) @PathVariable Integer productId,@Parameter(description = "ID del usuario", required = true) @PathVariable String userId) throws UserNotExistsException {
+    public ResponseEntity<CartProductResponseDTO>deleteProductFromCart(@Parameter(description = "ID del carrito", required = true)@PathVariable Integer cartId,@Parameter(description = "ID del producto", required = true) @PathVariable Integer productId,@Parameter(description = "ID del usuario",in = ParameterIn.HEADER, required = true) @RequestHeader String userId) throws UserNotExistsException {
         CartProductResponseDTO responseDTO=mapper.cartProductBoToCartProductDTO(deleteProductFromCart.run(cartId, productId, userId));
         return ResponseEntity.ok(responseDTO);
     }

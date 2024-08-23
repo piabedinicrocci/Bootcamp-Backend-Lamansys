@@ -58,7 +58,8 @@ public class CartProductControllerTest {
         QuantityDTO quantityDTO = new QuantityDTO(5);
 
         // Act & Assert
-        mockMvc.perform(put("/cart/{cartId}/product/{productId}/user/{userId}", cartId, productId, userId)
+        mockMvc.perform(put("/cart/{cartId}/product/{productId}", cartId, productId)
+                        .header("userId", userId)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{ \"quantity\": 5 }"))
                 .andExpect(status().isOk())
@@ -99,7 +100,8 @@ public class CartProductControllerTest {
         when(mapper.cartProductBoToCartProductDTO(cartProductBo)).thenReturn(responseDTO);
 
         // Act & Assert
-        mockMvc.perform(delete("/cart/{cartId}/product/{productId}/user/{userId}", cartId, productId, "user123"))
+        mockMvc.perform(delete("/cart/{cartId}/product/{productId}", cartId, productId)
+                        .header("userId", "user123"))
                 .andExpect(status().isOk())
                 .andExpect(content().json("{ \"cartId\": 1, \"productId\": 10, \"quantity\": 5, \"quantityPrice\": 100 }"));
     }
