@@ -6,6 +6,10 @@ API para gestionar productos, carritos y compras.
 - Bedini Pia: pbedini@alumnos.exa.unicen.edu.ar
 - Fernandez Florencia: florenciafernandez0301@gmail.com
 
+## Swagger
+Se puede acceder a la documentación completa de la API a través de Swagger, donde encontrarás todos los endpoints disponibles, ejemplos de solicitudes y respuestas, así como descripciones detalladas de cada uno.  
+`http://localhost:8080/api/swagger-ui/index.html`
+
 ## Endpoints
 
 ### Listar productos
