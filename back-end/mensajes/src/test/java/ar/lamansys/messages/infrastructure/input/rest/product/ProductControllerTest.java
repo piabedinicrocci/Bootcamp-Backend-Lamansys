@@ -49,7 +49,7 @@ public class ProductControllerTest {
 
         // Act y Assert
         mockMvc.perform(get("/products/{userId}", userId))
-                .andExpect(status().isCreated()) // Cambié a 201, ya que eso retorna el controlador
+                .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(expectedResponse.size()))
                 .andExpect(jsonPath("$[0].name").value("Product1"));
     }
@@ -65,3 +65,4 @@ public class ProductControllerTest {
                 .andExpect(status().isNotFound());
     }
 }
+
