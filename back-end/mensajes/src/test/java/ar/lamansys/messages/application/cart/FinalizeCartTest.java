@@ -2,6 +2,7 @@ package ar.lamansys.messages.application.cart;
 
 import ar.lamansys.messages.application.cart.port.CartStorage;
 import ar.lamansys.messages.application.cartProduct.port.CartProductStorage;
+import ar.lamansys.messages.application.exception.CartIsFinalizedException;
 import ar.lamansys.messages.application.exception.ProductPriceChangedException;
 import ar.lamansys.messages.application.exception.StockNotAvailableException;
 import ar.lamansys.messages.application.product.AssertStockAvailable;
@@ -36,7 +37,7 @@ public class FinalizeCartTest {
     private AssertStockAvailable assertStockAvailable;
 
     @Mock
-    private GetCartState getCartState;
+    private AssertCartIsNotFinalized assertCartIsNotFinalized;
 
     @InjectMocks
     private FinalizeCart finalizeCart;
@@ -102,6 +103,18 @@ public class FinalizeCartTest {
         assertEquals(product.getProductId(), exception.getProductId());
         assertEquals(product.getUnitPrice(), exception.getOldPrice());
         assertEquals(9, exception.getNewPrice());
+    }
+    @Test
+    void run_whenCartIsAlreadyFinalized_shouldThrowCartIsFinalizedException() throws Exception {
+        // Arrange
+        Integer cartId = 1;
+        String appUserId = "user10";
+
+        doThrow(new CartIsFinalizedException(cartId)).when(assertCartIsNotFinalized).run(cartId);
+
+        // Act & Assert
+        assertThrows(CartIsFinalizedException.class, () -> finalizeCart.run(cartId, appUserId));
+        verifyNoInteractions(cartProductStorage, productStorage, cartStorage);
     }
 }
 
