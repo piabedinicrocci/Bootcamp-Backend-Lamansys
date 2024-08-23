@@ -93,9 +93,5 @@ public class UpdateQuantityTest {
         verifyNoMoreInteractions(assertCartIsNotFinalized, assertProductInCartExist, assertStockAvailable, cartProductStorage, cartStorage);
     }
 
-
-
-
-
 }
 
