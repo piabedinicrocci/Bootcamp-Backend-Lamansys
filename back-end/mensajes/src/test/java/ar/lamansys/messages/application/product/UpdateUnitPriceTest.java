@@ -22,6 +22,9 @@ class UpdateUnitPriceTest {
     @Mock
     private AssertProductIsFromSeller assertProductIsFromSeller;
 
+    @Mock
+    private AssertUnitPriceChanged assertUnitPriceChanged;
+
     @InjectMocks
     private UpdateUnitPrice updateUnitPrice;
 
@@ -38,6 +41,7 @@ class UpdateUnitPriceTest {
         Integer newPrice = 1000;
 
         doNothing().when(assertProductIsFromSeller).run(productId, appUserId);
+        doNothing().when(assertUnitPriceChanged).run(productId, newPrice);
         doNothing().when(productStorage).updateUnitPrice(productId, newPrice);
 
         // Act
@@ -45,6 +49,7 @@ class UpdateUnitPriceTest {
 
         // Assert
         verify(assertProductIsFromSeller).run(productId, appUserId);
+        verify(assertUnitPriceChanged).run(productId, newPrice);
         verify(productStorage).updateUnitPrice(productId, newPrice);
     }
 

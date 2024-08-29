@@ -23,6 +23,9 @@ public class UpdateStockTest {
     @Mock
     private AssertProductIsFromSeller assertProductIsFromSeller;
 
+    @Mock
+    private AssertStockChanged assertStockChanged;
+
     @InjectMocks
     private UpdateStock updateStock;
 
@@ -39,6 +42,7 @@ public class UpdateStockTest {
         Integer newStock = 50;
 
         doNothing().when(assertProductIsFromSeller).run(productId, userId);
+        doNothing().when(assertStockChanged).run(productId, newStock);
         doNothing().when(productStorage).updateStock(productId, newStock);
 
         // Act
@@ -46,6 +50,7 @@ public class UpdateStockTest {
 
         // Assert
         verify(assertProductIsFromSeller).run(productId, userId);
+        verify(assertStockChanged).run(productId, newStock);
         verify(productStorage).updateStock(productId, newStock);
     }
 
