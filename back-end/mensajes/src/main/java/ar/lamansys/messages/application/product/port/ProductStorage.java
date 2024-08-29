@@ -16,8 +16,10 @@ public interface ProductStorage {
 
     Integer getUnitPrice(Integer productId);
 
-
     Integer findPriceByProductId(Integer productId);
 
     void updateStock(Integer productId, Integer newStock);
+
+    Stream<ProductStoredBo> findAllProducts();
+
 }

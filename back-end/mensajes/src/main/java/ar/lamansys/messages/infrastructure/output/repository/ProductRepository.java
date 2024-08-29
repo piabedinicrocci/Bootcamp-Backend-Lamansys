@@ -49,5 +49,10 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
             " SET p.stock=:newStock" +
             " WHERE p.id=:productId")
     void updateStock(@Param("productId")Integer productId, @Param("newStock")Integer newStock);
+
+    @Query("SELECT NEW ar.lamansys.messages.domain.product.ProductStoredBo(p.name, p.stock, p.unitPrice, p.userId) " +
+            "FROM Product p ")
+    Stream<ProductStoredBo> findAllProducts();
+
 }
 

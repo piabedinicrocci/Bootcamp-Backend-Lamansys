@@ -49,4 +49,7 @@ public class ProductStorageImpl implements ProductStorage {
         repository.updateStock( productId, newStock);
     }
 
+    @Override
+    public Stream<ProductStoredBo> findAllProducts() { return repository.findAllProducts(); }
+
 }

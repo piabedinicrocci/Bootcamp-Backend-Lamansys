@@ -66,6 +66,24 @@ public class ListProductsTest {
         verify(productStorage).findAllByUserId(userId);
     }
 
+    @Test
+    void run_returnsAllProducts() {
+        // Arrange
+        List<ProductStoredBo> expectedProducts = List.of(
+                new ProductStoredBo("Product1", 40, 600, "user1"),
+                new ProductStoredBo("Product2", 30, 400, "user2")
+        );
+        when(productStorage.findAllProducts()).thenReturn(expectedProducts.stream());
+
+        // Act
+        List<ProductStoredBo> result = listProducts.run();
+
+        // Assert
+        assertEquals(expectedProducts, result);
+        verify(productStorage).findAllProducts();
+    }
+
+
 
 
 }

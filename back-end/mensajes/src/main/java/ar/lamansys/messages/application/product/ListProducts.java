@@ -20,7 +20,13 @@ public class ListProducts {
     @Transactional(readOnly = true)
     public List<ProductStoredBo> run(String userId) throws UserNotExistsException {
         assertUserExists.run(userId);
-        List<ProductStoredBo> products=productStorage.findAllByUserId(userId).collect(Collectors.toList());
+        List<ProductStoredBo> products= productStorage.findAllByUserId(userId).collect(Collectors.toList());
+        return products;
+    }
+
+    @Transactional(readOnly = true)
+    public List<ProductStoredBo> run() {
+        List<ProductStoredBo> products= productStorage.findAllProducts().collect(Collectors.toList());
         return products;
     }
 

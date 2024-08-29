@@ -39,4 +39,16 @@ public class ProductController {
         return ResponseEntity.status(200).body(response);
     }
 
+    @GetMapping()
+    @Operation(summary = "Obtiene todos los productos independientemente del vendedor",
+            description = "Este endpoint se utiliza para obtener los productos vendidos por todos los usuarios.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Productos del vendedor obtenidas con exito"),
+    })
+    public ResponseEntity<List<ProductResponseDTO>> getProducts() {
+        List<ProductStoredBo> products = listProducts.run();
+        List<ProductResponseDTO> response = productMapper.boListToProductResponseListDTO(products);
+        return ResponseEntity.status(200).body(response);
+    }
+
 }

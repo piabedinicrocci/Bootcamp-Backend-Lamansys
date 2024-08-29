@@ -162,6 +162,19 @@ La API `/api/cart/{cartId}/checkout` permite finalizar la compra del carrito `ca
 
 ---
 
+## Parte individual - Pia Bedini
+### Obtener productos de un usuario
+
+**Descripción:**
+La API `/api/products` permite obtener una lista de todos los productos, independientemente del vendedor.
+
+**Método HTTP:** `GET`
+
+**Respuestas:**
+- `200 OK`: La solicitud fue exitosa, y la respuesta contiene los datos del género correspondiente.
+
+---
+
 
 
 
