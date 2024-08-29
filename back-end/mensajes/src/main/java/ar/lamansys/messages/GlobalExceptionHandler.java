@@ -100,6 +100,13 @@ public class GlobalExceptionHandler {
         Map<String, String> errorResponse = new HashMap<>();
         errorResponse.put("code", "PRODUCT_IS_NOT_FROM_SELLER");
         errorResponse.put("message", ex.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatus.FORBIDDEN);
+    }
+    @ExceptionHandler(StockHasNotChangedException.class)
+    public ResponseEntity<Map<String, String>> stockHasNotChangedHandler(StockHasNotChangedException ex) {
+        Map<String, String> errorResponse = new HashMap<>();
+        errorResponse.put("code", "STOCK_HAS_NOT_CHANGED");
+        errorResponse.put("message", ex.getMessage());
         return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
     }
 

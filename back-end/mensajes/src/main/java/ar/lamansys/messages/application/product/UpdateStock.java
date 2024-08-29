@@ -1,6 +1,7 @@
 package ar.lamansys.messages.application.product;
 
 import ar.lamansys.messages.application.exception.ProductNotExistsException;
+import ar.lamansys.messages.application.exception.StockHasNotChangedException;
 import ar.lamansys.messages.application.exception.UserNotExistsException;
 import ar.lamansys.messages.application.exception.ProductIsNotFromSellerException;
 import ar.lamansys.messages.application.product.port.ProductStorage;
@@ -14,10 +15,14 @@ import javax.transaction.Transactional;
 public class UpdateStock {
     private final ProductStorage productStorage;
     private final AssertProductIsFromSeller assertProductIsFromSeller;
+    private final AssertStockChanged assertStockChanged;
 
-    public void run(String appUserId, Integer productId, Integer newStock) throws ProductIsNotFromSellerException, UserNotExistsException, ProductNotExistsException {
+    public void run(String appUserId, Integer productId, Integer newStock) throws ProductIsNotFromSellerException, UserNotExistsException, ProductNotExistsException, StockHasNotChangedException {
         //verificar que el producto y usuario existan, y que el producto pertenezca al vendedor
         assertProductIsFromSeller.run(productId,appUserId);
+
+        //verificar que el stock a modificar efectivamente sea distinto al actual
+        assertStockChanged.run(productId,newStock);
 
         //actualizo el stock en product storage
         productStorage.updateStock(productId, newStock);
