@@ -4,8 +4,12 @@ import ar.lamansys.messages.application.exception.UserNotExistsException;
 import ar.lamansys.messages.application.product.port.ProductStorage;
 import ar.lamansys.messages.application.user.AssertUserExists;
 import ar.lamansys.messages.domain.product.ProductStoredBo;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 
 import java.util.List;
 import java.util.stream.Stream;
@@ -15,10 +19,19 @@ import static org.mockito.Mockito.*;
 
 public class ListProductsTest {
 
-    private final ProductStorage productStorage = Mockito.mock(ProductStorage.class);
-    private final AssertUserExists assertUserExists= Mockito.mock(AssertUserExists.class);
+    @Mock
+    private ProductStorage productStorage;
 
-    private ListProducts listProducts=new ListProducts(productStorage, assertUserExists);
+    @Mock
+    private AssertUserExists assertUserExists;
+
+    @InjectMocks
+    private ListProducts listProducts;
+
+    @BeforeEach
+    void setUp() {
+        MockitoAnnotations.openMocks(this);
+    }
 
     @Test
     void run_userExists_returnsProductList() throws UserNotExistsException {

@@ -46,10 +46,13 @@ public class ProductStorageImpl implements ProductStorage {
 
     @Override
     public void updateStock(Integer productId, Integer newStock) {
-        repository.updateStock( productId, newStock);
+        repository.updateStock(productId, newStock);
     }
 
     @Override
     public Stream<ProductStoredBo> findAllProducts() { return repository.findAllProducts(); }
+
+    @Override
+    public void updateUnitPrice(Integer productId, Integer newPrice) { repository.updateUnitPrice(productId,newPrice); }
 
 }

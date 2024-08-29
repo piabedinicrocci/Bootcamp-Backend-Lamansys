@@ -4,9 +4,11 @@ import ar.lamansys.messages.application.exception.ProductIsNotFromSellerExceptio
 import ar.lamansys.messages.application.exception.UserNotExistsException;
 import ar.lamansys.messages.application.product.ListProducts;
 import ar.lamansys.messages.application.product.UpdateStock;
+import ar.lamansys.messages.application.product.UpdateUnitPrice;
 import ar.lamansys.messages.domain.product.ProductStoredBo;
 import ar.lamansys.messages.infrastructure.DTO.ProductResponseDTO;
 import ar.lamansys.messages.infrastructure.DTO.StockDTO;
+import ar.lamansys.messages.infrastructure.DTO.UnitPriceDTO;
 import ar.lamansys.messages.infrastructure.mapper.ProductMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -21,7 +23,6 @@ import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 
 import java.util.List;
 
@@ -38,6 +39,9 @@ public class ProductControllerTest {
 
     @MockBean
     private UpdateStock updateStock;
+
+    @MockBean
+    private UpdateUnitPrice updateUnitPrice;
 
     @MockBean
     private ProductMapper productMapper;
@@ -87,7 +91,7 @@ public class ProductControllerTest {
         doNothing().when(updateStock).run(userId, productId, stockDTO.getStock());
 
         // Act y Assert
-        mockMvc.perform(put("/products/{productId}", productId)
+        mockMvc.perform(put("/products/{productId}/stock", productId)
                         .header("userId", userId)
                         .contentType(APPLICATION_JSON)
                         .content("{\"stock\": 50}"))
@@ -105,12 +109,48 @@ public class ProductControllerTest {
         doThrow(new ProductIsNotFromSellerException(productId, userId)).when(updateStock).run(userId, productId, stockDTO.getStock());
 
         // Act y Assert
-        mockMvc.perform(put("/products/{productId}", productId)
+        mockMvc.perform(put("/products/{productId}/stock", productId)
                         .header("userId", userId)
                         .contentType(APPLICATION_JSON)
                         .content("{\"stock\": 50}"))
                 .andExpect(status().isConflict());
     }
+
+    @Test
+    void updateUnitPrice_ok() throws Exception {
+        // Arrange
+        String userId = "user1";
+        Integer productId = 1;
+        UnitPriceDTO priceDTO = new UnitPriceDTO(1000);
+
+        doNothing().when(updateUnitPrice).run(userId, productId, priceDTO.getUnitPrice());
+
+        // Act y Assert
+        mockMvc.perform(put("/products/{productId}/price", productId)
+                        .header("userId", userId)
+                        .contentType(APPLICATION_JSON)
+                        .content("{\"unitPrice\": 1000}"))
+                .andExpect(status().isOk())
+                .andExpect(content().string("The price of the product was succesfully changed"));
+    }
+
+    @Test
+    void updateUnitPrice_productNotFromSeller() throws Exception {
+        // Arrange
+        String userId = "user2";
+        Integer productId = 1;
+        UnitPriceDTO priceDTO = new UnitPriceDTO(1000);
+
+        doThrow(new ProductIsNotFromSellerException(productId, userId)).when(updateUnitPrice).run(userId, productId, priceDTO.getUnitPrice());
+
+        // Act y Assert
+        mockMvc.perform(put("/products/{productId}/price", productId)
+                        .header("userId", userId)
+                        .contentType(APPLICATION_JSON)
+                        .content("{\"unitPrice\": 1000}"))
+                .andExpect(status().isConflict());
+    }
+
 
 }
 

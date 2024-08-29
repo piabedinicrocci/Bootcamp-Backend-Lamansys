@@ -54,5 +54,10 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
             "FROM Product p ORDER BY p.name ASC")
     Stream<ProductStoredBo> findAllProducts();
 
+    @Modifying
+    @Query("UPDATE Product p" +
+            " SET p.unitPrice=:newPrice" +
+            " WHERE p.id=:productId")
+    void updateUnitPrice(Integer productId, Integer newPrice);
 }
 

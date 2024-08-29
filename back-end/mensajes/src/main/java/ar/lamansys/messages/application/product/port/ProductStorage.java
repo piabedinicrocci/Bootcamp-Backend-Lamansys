@@ -22,4 +22,6 @@ public interface ProductStorage {
 
     Stream<ProductStoredBo> findAllProducts();
 
+    void updateUnitPrice(Integer productId, Integer newPrice);
+
 }

@@ -4,8 +4,12 @@ import ar.lamansys.messages.application.exception.ProductNotExistsException;
 import ar.lamansys.messages.application.exception.UserNotExistsException;
 import ar.lamansys.messages.application.exception.ProductIsNotFromSellerException;
 import ar.lamansys.messages.application.product.port.ProductStorage;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doThrow;
@@ -13,10 +17,19 @@ import static org.mockito.Mockito.verify;
 
 public class UpdateStockTest {
 
-    private final ProductStorage productStorage = Mockito.mock(ProductStorage.class);
-    private final AssertProductIsFromSeller assertProductIsFromSeller = Mockito.mock(AssertProductIsFromSeller.class);
+    @Mock
+    private ProductStorage productStorage;
 
-    private final UpdateStock updateStock = new UpdateStock(productStorage, assertProductIsFromSeller);
+    @Mock
+    private AssertProductIsFromSeller assertProductIsFromSeller;
+
+    @InjectMocks
+    private UpdateStock updateStock;
+
+    @BeforeEach
+    void setUp() {
+        MockitoAnnotations.openMocks(this);
+    }
 
     @Test
     void run_stockUpdatedSuccessfully() throws UserNotExistsException, ProductNotExistsException, ProductIsNotFromSellerException {
