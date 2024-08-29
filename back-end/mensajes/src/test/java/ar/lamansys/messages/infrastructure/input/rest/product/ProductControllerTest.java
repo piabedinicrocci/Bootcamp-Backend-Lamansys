@@ -113,7 +113,7 @@ public class ProductControllerTest {
                         .header("userId", userId)
                         .contentType(APPLICATION_JSON)
                         .content("{\"stock\": 50}"))
-                .andExpect(status().isConflict());
+                .andExpect(status().isForbidden());
     }
 
     @Test
@@ -148,7 +148,7 @@ public class ProductControllerTest {
                         .header("userId", userId)
                         .contentType(APPLICATION_JSON)
                         .content("{\"unitPrice\": 1000}"))
-                .andExpect(status().isConflict());
+                .andExpect(status().isForbidden());
     }
 
 
