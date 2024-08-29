@@ -195,7 +195,8 @@ La API `/api/products/{productId}/stock` posibilita la actualización del stock 
 - `200 OK`: La solicitud de actualización fue exitosa.
 - `403 Forbidden`: El producto no pertenece al usuario.
 - `404 Not Found`: El producto o el usuario especificado no existe.
-
+- `409 Conflict`: El stock actualizado es el mismo que el actual.
+- 
 ---
 
 ### Actualizar precio de un producto propio de un vendedor
@@ -218,7 +219,7 @@ La API `/api/products/{productId}/price` posibilita la actualización del precio
 - `200 OK`: La solicitud de actualización fue exitosa.
 - `403 Forbidden`: El producto no pertenece al usuario.
 - `404 Not Found`: El producto o el usuario especificado no existe.
-- `409 Conflict`: El stock actualizado es el mismo que el actual.
+- `409 Conflict`: El precio actualizado es el mismo que el actual.
 
 
 ---

@@ -109,5 +109,12 @@ public class GlobalExceptionHandler {
         errorResponse.put("message", ex.getMessage());
         return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
     }
+    @ExceptionHandler(UnitPriceHasNotChangedException.class)
+    public ResponseEntity<Map<String, String>> unitPriceHasNotChangedHandler(UnitPriceHasNotChangedException ex) {
+        Map<String, String> errorResponse = new HashMap<>();
+        errorResponse.put("code", "PRICE_HAS_NOT_CHANGED");
+        errorResponse.put("message", ex.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
+    }
 
 }
