@@ -1,9 +1,12 @@
 package ar.lamansys.messages.infrastructure.input.rest.product;
 
+import ar.lamansys.messages.application.exception.ProductIsNotFromSellerException;
 import ar.lamansys.messages.application.exception.UserNotExistsException;
 import ar.lamansys.messages.application.product.ListProducts;
+import ar.lamansys.messages.application.product.UpdateStock;
 import ar.lamansys.messages.domain.product.ProductStoredBo;
 import ar.lamansys.messages.infrastructure.DTO.ProductResponseDTO;
+import ar.lamansys.messages.infrastructure.DTO.StockDTO;
 import ar.lamansys.messages.infrastructure.mapper.ProductMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -12,13 +15,19 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doThrow;
+import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 
 import java.util.List;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(ProductController.class)
@@ -26,6 +35,9 @@ public class ProductControllerTest {
 
     @MockBean
     private ListProducts listProducts;
+
+    @MockBean
+    private UpdateStock updateStock;
 
     @MockBean
     private ProductMapper productMapper;
@@ -64,5 +76,41 @@ public class ProductControllerTest {
         mockMvc.perform(get("/products/{userId}", userId))
                 .andExpect(status().isNotFound());
     }
+
+    @Test
+    void updateStock_ok() throws Exception {
+        // Arrange
+        String userId = "user1";
+        Integer productId = 1;
+        StockDTO stockDTO = new StockDTO(50);
+
+        doNothing().when(updateStock).run(userId, productId, stockDTO.getStock());
+
+        // Act y Assert
+        mockMvc.perform(put("/products/{productId}", productId)
+                        .header("userId", userId)
+                        .contentType(APPLICATION_JSON)
+                        .content("{\"stock\": 50}"))
+                .andExpect(status().isOk())
+                .andExpect(content().string("The stock of the product was succesfully changed"));
+    }
+
+    @Test
+    void updateStock_productNotFromSeller() throws Exception {
+        // Arrange
+        String userId = "user2";
+        Integer productId = 1;
+        StockDTO stockDTO = new StockDTO(50);
+
+        doThrow(new ProductIsNotFromSellerException(productId, userId)).when(updateStock).run(userId, productId, stockDTO.getStock());
+
+        // Act y Assert
+        mockMvc.perform(put("/products/{productId}", productId)
+                        .header("userId", userId)
+                        .contentType(APPLICATION_JSON)
+                        .content("{\"stock\": 50}"))
+                .andExpect(status().isConflict());
+    }
+
 }
 

@@ -16,7 +16,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 
     @Query("SELECT NEW ar.lamansys.messages.domain.product.ProductStoredBo(p.name, p.stock, p.unitPrice, p.userId) " +
             "FROM Product p " +
-            "WHERE p.userId = :userId")
+            "WHERE p.userId = :userId ORDER BY p.name ASC")
     Stream<ProductStoredBo> findAllByUserId(@Param("userId") String userId);
 
     @Query("SELECT NEW ar.lamansys.messages.domain.product.ProductStoredBo(p.name, p.stock, p.unitPrice, p.userId) " +
@@ -51,7 +51,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     void updateStock(@Param("productId")Integer productId, @Param("newStock")Integer newStock);
 
     @Query("SELECT NEW ar.lamansys.messages.domain.product.ProductStoredBo(p.name, p.stock, p.unitPrice, p.userId) " +
-            "FROM Product p ")
+            "FROM Product p ORDER BY p.name ASC")
     Stream<ProductStoredBo> findAllProducts();
 
 }

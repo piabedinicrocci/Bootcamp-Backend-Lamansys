@@ -35,7 +35,6 @@ public class GlobalExceptionHandler {
         errorResponse.put("message", ex.getMessage());
         return new ResponseEntity<>(errorResponse, HttpStatus.FORBIDDEN);
     }
-
     @ExceptionHandler(OpenCartException.class)
     public ResponseEntity<Map<String, String>> openCartHandler(Exception ex) {
         Map<String, String> errorResponse = new HashMap<>();
@@ -50,7 +49,6 @@ public class GlobalExceptionHandler {
         errorResponse.put("message", ex.getMessage());
         return new ResponseEntity<>(errorResponse, HttpStatus.UNPROCESSABLE_ENTITY);
     }
-
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, String>> methodArgumentNotValidHandler(MethodArgumentNotValidException ex) {
         Map<String, String> errors = new HashMap<>();
@@ -97,6 +95,12 @@ public class GlobalExceptionHandler {
         errorResponse.put("message", ex.getMessage());
         return new ResponseEntity<>(errorResponse, HttpStatus.UNPROCESSABLE_ENTITY);
     }
-
+    @ExceptionHandler(ProductIsNotFromSellerException.class)
+    public ResponseEntity<Map<String, String>> productIsNotFromSellerHandler(ProductIsNotFromSellerException ex) {
+        Map<String, String> errorResponse = new HashMap<>();
+        errorResponse.put("code", "PRODUCT_IS_NOT_FROM_SELLER");
+        errorResponse.put("message", ex.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
+    }
 
 }

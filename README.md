@@ -175,7 +175,28 @@ La API `/api/products` permite obtener una lista de todos los productos, indepen
 
 ---
 
+### Actualizar stock de un producto de un vendedor
 
+**Descripción:**
+La API `/api/products/{productId}` posibilita la actualización del stock de un producto mediante su `productId` de un determinado vendedor `userId`. Se debe proporcionar el stock en el cuerpo de la solicitud.
+
+**Método HTTP:** `PUT`
+
+**Parámetros de la Ruta:**
+- `productId`: Identificador único del producto.
+
+**Headers de la solicitud:**
+- `userId`: Identificador único del usuario.
+
+**Cuerpo:**
+- `stock`
+
+**Respuestas:**
+- `200 OK`: La solicitud de actualización fue exitosa.
+- `409 Conflict`: El producto no pertenece al usuario.
+- `404 Not Found`: El producto o el usuario especificado no existe.
+
+---
 
 
 
